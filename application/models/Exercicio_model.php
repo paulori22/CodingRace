@@ -50,6 +50,14 @@ class Exercicio_model extends MY_Model
             return null;
         }
     }
+    
+    function getTotalNumberOfExercicesOfTopic($idTopico){
+       if(is_null($idTopico))
+          return false;
+       $this->db->where('Topico_idTopico', $idTopico); 
+       $query = $this->db->get($this->table);
+       return $query->num_rows();
+    }
 
     function AtualizaExercicio($id, $data) {
         if(is_null($id) || !isset($data))
