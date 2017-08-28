@@ -14,42 +14,57 @@
                 <?php endif; ?>
             </div>
             <?php echo validation_errors(); ?>
-            <div class="w3-container" style="padding-top:24px"><h3><b><i class="fa fa-file-code-o"></i>&nbsp;Tópico - <?php echo $topico['Nome'];?> - Condicional - Questão 1 de <?php echo $exercicio['total_de_exercicios_de_um_topico']?> </b></h3>
+            <div class="w3-container" style="padding-top:24px"><h3><b><i class="fa fa-file-code-o"></i>&nbsp;<?php echo $topico['Nome'];?> - Questão 1 de <?php echo $exercicio['total_de_exercicios_de_um_topico']?> </b></h3>
+            </div>
+            <div class="w3-bar w3-light-grey">
+                <?php
+                
+                    for($c=1;$c<=$exercicio['total_de_exercicios_de_um_topico'];$c++)
+                    {
+                        echo '<a href="#"><span class="w3-badge w3-red">'.'.'.'</span></a>&nbsp';
+                    }
+                 
+                ?>
+                <!--
+                <a href="#"><span class="w3-badge w3-large w3-padding w3-white">1</span></a>
+                <span class="w3-badge w3-green">2</span>
+                <span class="w3-badge w3-green">3</span>
+                -->
             </div>
 
             <form class="w3-container w3-light-grey w3-text-black w3-margin" method="post" enctype="multipart/form-data" action="<?= base_url('confereexercicio_aluno') . "/" . $exercicio['idExercicio']; ?>">
 
 
-                <div class="w3-row w3-section">
-                    <p><?php echo $exercicio['Pergunta']; ?></p>
+                <div class="w3-panel w3-border w3-round-xlarge">
+                    <?php echo $exercicio['Pergunta']; ?>
                 </div>
 
 
                 <div class="w3-row w3-section">   
 
-                    <p>    
-                    <div class="w3-panel w3-round-jumbo w3-light-blue">
+                        
+                    <div class="w3-panel w3-round-jumbo">
                         <input class="w3-radio" type="radio" name="opcao" id="opcao" value="A"/>
-                        <label class="w3-validate">A) <?php echo $alternativas['itemA']; ?></label>
+                        <label class="w3-validate">a) <?php echo $alternativas['itemA']; ?></label>
                     </div>
 
-                    <div class="w3-panel w3-round-jumbo w3-light-blue">
+                    <div class="w3-panel w3-round-jumbo">
                         <input class="w3-radio" type="radio" name="opcao" id="opcao" value="B"/>
-                        <label class="w3-validate">B) <?php echo $alternativas['itemB']; ?></label>
+                        <label class="w3-validate">b) <?php echo $alternativas['itemB']; ?></label>
                     </div>
 
-                    <div class="w3-panel w3-round-jumbo w3-light-blue">
+                    <div class="w3-panel w3-round-jumbo">
                         <input class="w3-radio" type="radio" name="opcao" id="opcao" value="C"/>
-                        <label class="w3-validate">C) <?php echo $alternativas['itemC']; ?></label>
+                        <label class="w3-validate">c) <?php echo $alternativas['itemC']; ?></label>
                     </div>
-                    <div class="w3-panel w3-round-jumbo w3-light-blue">
+                    <div class="w3-panel w3-round-jumbo">
                         <input class="w3-radio" type="radio" name="opcao" id="opcao" value="D"/>
-                        <label class="w3-validate">D) <?php echo $alternativas['itemD']; ?></label>
+                        <label class="w3-validate">d) <?php echo $alternativas['itemD']; ?></label>
                     </div>
 
-                    <div class="w3-panel w3-round-jumbo w3-light-blue">
+                    <div class="w3-panel w3-round-jumbo">
                         <input class="w3-radio" type="radio" name="opcao" id="opcao" value="E"/>
-                        <label class="w3-validate">E) <?php echo $alternativas['itemE']; ?></label>
+                        <label class="w3-validate">e) <?php echo $alternativas['itemE']; ?></label>
                     </div>
 
                 </div>

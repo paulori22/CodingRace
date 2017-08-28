@@ -11,5 +11,17 @@
         <script>tinymce.init({ selector:'textarea', branding: false});</script>
         <style>
             html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+            
+            .numero_circulo {
+                border-radius: 50%;
+
+                width: 20px;
+                height: 20px;
+                padding: 8px;
+
+                border: 2px solid #666;
+                text-align: center;
+
+            }
         </style>
     </head>
