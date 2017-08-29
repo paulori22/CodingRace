@@ -10,17 +10,39 @@
         <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
         <script>tinymce.init({ selector:'textarea', branding: false});</script>
         <style>
+            
             html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
             
-            .numero_circulo {
-                border-radius: 50%;
+            .circle {
+              position: relative;
+              display: inline-block;
+              line-height: 0;
+              width: 30px;
+              height: 30px;
+              padding: 15px 0px 0px 0px;
+              border-radius: 50%;
 
-                width: 20px;
-                height: 20px;
-                padding: 8px;
+              background: #38a9e4;
+              color: white;
+              font-family: "Times New Roman", Times, serif;
+              font-size: 12px;
+              text-align: center;
 
-                border: 2px solid #666;
-                text-align: center;
+            }
+            .circle_atual {
+              position: relative;
+              display: inline-block;
+              line-height: 0;
+              width: 50px;
+              height: 50px;
+              padding: 25px 0px 0px 0px;
+              border-radius: 50%;
+
+              background: #38a9e4;
+              color: white;
+              font-family: "Times New Roman", Times, serif;
+              font-size: 12px;
+              text-align: center;
 
             }
         </style>

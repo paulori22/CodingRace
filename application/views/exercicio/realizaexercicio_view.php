@@ -5,7 +5,7 @@
     <!-- !PAGE CONTENT! -->
     <div class="w3-main" style="margin-left:300px;margin-top:43px;">
 
-        <?php $this->load->view('commons/menupagina') ?>
+        <?php $this->load->view('exercicio/header_exercicio') ?>
 
         <div class="w3-container w3-content">
             <div class="w3-container w3-left">
@@ -14,22 +14,7 @@
                 <?php endif; ?>
             </div>
             <?php echo validation_errors(); ?>
-            <div class="w3-container" style="padding-top:24px"><h3><b><i class="fa fa-file-code-o"></i>&nbsp;<?php echo $topico['Nome'];?> - Questão 1 de <?php echo $exercicio['total_de_exercicios_de_um_topico']?> </b></h3>
-            </div>
-            <div class="w3-bar w3-light-grey">
-                <?php
-                
-                    for($c=1;$c<=$exercicio['total_de_exercicios_de_um_topico'];$c++)
-                    {
-                        echo '<a href="#"><span class="w3-badge w3-red">'.'.'.'</span></a>&nbsp';
-                    }
-                 
-                ?>
-                <!--
-                <a href="#"><span class="w3-badge w3-large w3-padding w3-white">1</span></a>
-                <span class="w3-badge w3-green">2</span>
-                <span class="w3-badge w3-green">3</span>
-                -->
+
             </div>
 
             <form class="w3-container w3-light-grey w3-text-black w3-margin" method="post" enctype="multipart/form-data" action="<?= base_url('confereexercicio_aluno') . "/" . $exercicio['idExercicio']; ?>">
