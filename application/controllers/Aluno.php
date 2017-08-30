@@ -237,12 +237,14 @@ class Aluno extends MY_Controller
         if($opcao == $alternativa['Alternativa']){
             echo "<script> window.alert('Resposta Correta!!')</script>";
             $ra = $this->session->userdata('ra');
-            $timestamp = time();
+            date_default_timezone_set('America/Sao_Paulo');
+            $data_exercicio = date('Y/m/d H:i:s', time());
             $dados_resposta = array(
                 'Usuario_RA' => $ra,
                 'Exercicio_idExercicio' => $idExercicio,
-                'Historico_Respostas' => $timestamp,
+                'Historico_Respostas' => $data_exercicio,
                 'Dificuldade' => 1,
+                'Resposta_Correta' => 1,
                 'Resposta' => $opcao,
             );
             $status = $this->usuario_has_resposta_model->Inserir($dados_resposta);
@@ -255,12 +257,13 @@ class Aluno extends MY_Controller
             }
         } else {
             echo "<script> window.alert('Resposta Incorreta!!')</script>";
+            date_default_timezone_set('America/Sao_Paulo');
             $ra = $this->session->userdata('ra');
-            $timestamp = time();
+            $data_exercicio = date('Y/m/d H:i:s', time());
             $dados_resposta = array(
                 'Usuario_RA' => $ra,
                 'Exercicio_idExercicio' => $idExercicio,
-                'Historico_Respostas' => $timestamp,
+                'Historico_Respostas' => $data_exercicio,
                 'Dificuldade' => 1,
                 'Resposta' => $opcao,
             );
