@@ -176,12 +176,25 @@ class Aluno extends MY_Controller
         $this->load->model('usuarios_model');
         $this->load->model('curso_has_topico_model');
         $this->load->model('topicos_model');
+        $this->load->model('exercicio_model');
 
         if(is_null($pin))
             redirect('cursoscadastrados_aluno');
 
         $idTopico = $this->curso_has_topico_model->TopicosCursos($pin);
         $data['topicos'] = $this->topicos_model->GetBySomeId($idTopico);
+        
+        $ids = array();
+        foreach ($idTopico as $dados) {
+            $ids[] = $dados['Topico_idTopico'];
+        }
+        
+       // $data['exercicios_topicos'] = array();
+        foreach($data['topicos'] as $row){
+            
+                $data['exercicios_topicos'][$row['Nome']] = $this->exercicio_model->GetListaExerciciosAlunoTopico($row['idTopico'], $this->session->userdata('ra'));
+            
+        }
         
         $this->session->set_userdata('Curso_PIN', $pin);
 

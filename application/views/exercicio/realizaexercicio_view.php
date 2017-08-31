@@ -79,7 +79,7 @@
                     echo '<div class="w3-panel w3-border w3-round-xlarge"><h5 class="w3-center">Infelizmente você não acertou a questão, mas continue você consegue!</h5></div>';
                 } else {
                     ?>
-                    <button class="w3-round-large w3-bar-item w3-btn w3-light-grey" style="font-size:32px;" onclick="document.getElementById('id01').style.display = 'block'">
+                    <button class="w3-round-large w3-bar-item w3-btn w3-light-grey" style="font-size:32px;">
                         <i class="fa fa-check-square-o w3-round-large"	style="font-size:32px;color:green">
                         </i>
                         <h5>Confirmar</h5>
