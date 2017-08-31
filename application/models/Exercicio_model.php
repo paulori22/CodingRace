@@ -24,6 +24,7 @@ class Exercicio_model extends MY_Model {
             return null;
         }
     }
+    
 
     function GetByTopico($idTopico) {
         if (is_null($idTopico))
@@ -43,6 +44,28 @@ class Exercicio_model extends MY_Model {
         $sql = "SELECT @n := @n + 1 n, Exercicio.idExercicio\n"
                 . "FROM `Exercicio`, (SELECT @n := 0) m\n"
                 . "WHERE `Topico_idTopico`=$idTopico";
+        $query = $this->db->query($sql);
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
+    
+        function GetListaExerciciosAlunoTopico($idTopico,$ra) {
+        if (is_null($idTopico) || is_null($ra))
+            return false;
+        
+        $sql = "SELECT Exercicio.idExercicio, SUM(Usuario_has_Resposta.Resposta_Correta) AS Resposta_Correta, COUNT(Usuario_has_Resposta.Usuario_RA) AS Tentativas\n"
+
+            . "FROM Exercicio\n"
+
+            . "LEFT JOIN Usuario_has_Resposta ON Exercicio.idExercicio=Usuario_has_Resposta.Exercicio_idExercicio\n"
+
+            . "WHERE Exercicio.Topico_idTopico=$idTopico AND (Usuario_has_Resposta.Usuario_RA=$ra OR Usuario_has_Resposta.Usuario_RA IS NULL)\n"
+
+            . "GROUP BY Exercicio.idExercicio";
         $query = $this->db->query($sql);
 
         if ($query->num_rows() > 0) {

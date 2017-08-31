@@ -15,57 +15,76 @@
             </div>
             <?php echo validation_errors(); ?>
 
+        </div>
+
+        <form class="w3-container w3-light-grey w3-text-black w3-margin" method="post" enctype="multipart/form-data" action="<?= base_url('confereexercicio_aluno') . "/" . $exercicio['idExercicio']; ?>">
+
+
+            <div class="w3-panel w3-border w3-round-xlarge">
+                <?php echo $exercicio['Pergunta']; ?>
             </div>
 
-            <form class="w3-container w3-light-grey w3-text-black w3-margin" method="post" enctype="multipart/form-data" action="<?= base_url('confereexercicio_aluno') . "/" . $exercicio['idExercicio']; ?>">
+
+            <div class="w3-row w3-section">   
 
 
-                <div class="w3-panel w3-border w3-round-xlarge">
-                    <?php echo $exercicio['Pergunta']; ?>
+                <div class="w3-panel w3-round-jumbo">
+                    <input class="w3-radio" type="radio" name="opcao" id="opcao" value="A"/>
+                    <label class="w3-validate">a) <?php echo $alternativas['itemA']; ?></label>
                 </div>
 
-
-                <div class="w3-row w3-section">   
-
-                        
-                    <div class="w3-panel w3-round-jumbo">
-                        <input class="w3-radio" type="radio" name="opcao" id="opcao" value="A"/>
-                        <label class="w3-validate">a) <?php echo $alternativas['itemA']; ?></label>
-                    </div>
-
-                    <div class="w3-panel w3-round-jumbo">
-                        <input class="w3-radio" type="radio" name="opcao" id="opcao" value="B"/>
-                        <label class="w3-validate">b) <?php echo $alternativas['itemB']; ?></label>
-                    </div>
-
-                    <div class="w3-panel w3-round-jumbo">
-                        <input class="w3-radio" type="radio" name="opcao" id="opcao" value="C"/>
-                        <label class="w3-validate">c) <?php echo $alternativas['itemC']; ?></label>
-                    </div>
-                    <div class="w3-panel w3-round-jumbo">
-                        <input class="w3-radio" type="radio" name="opcao" id="opcao" value="D"/>
-                        <label class="w3-validate">d) <?php echo $alternativas['itemD']; ?></label>
-                    </div>
-
-                    <div class="w3-panel w3-round-jumbo">
-                        <input class="w3-radio" type="radio" name="opcao" id="opcao" value="E"/>
-                        <label class="w3-validate">e) <?php echo $alternativas['itemE']; ?></label>
-                    </div>
-
+                <div class="w3-panel w3-round-jumbo">
+                    <input class="w3-radio" type="radio" name="opcao" id="opcao" value="B"/>
+                    <label class="w3-validate">b) <?php echo $alternativas['itemB']; ?></label>
                 </div>
 
-                <p class="w3-center">
+                <div class="w3-panel w3-round-jumbo">
+                    <input class="w3-radio" type="radio" name="opcao" id="opcao" value="C"/>
+                    <label class="w3-validate">c) <?php echo $alternativas['itemC']; ?></label>
+                </div>
+                <div class="w3-panel w3-round-jumbo">
+                    <input class="w3-radio" type="radio" name="opcao" id="opcao" value="D"/>
+                    <label class="w3-validate">d) <?php echo $alternativas['itemD']; ?></label>
+                </div>
 
+                <div class="w3-panel w3-round-jumbo">
+                    <input class="w3-radio" type="radio" name="opcao" id="opcao" value="E"/>
+                    <label class="w3-validate">e) <?php echo $alternativas['itemE']; ?></label>
+                </div>
+
+            </div>
+
+            <p class="w3-center">
+
+                <?php foreach ($exercicios as $row) { ?>
+
+                    <?php if ($exercicio['idExercicio'] == $row['idExercicio']) { ?>
+
+                        <?php if ($row['Resposta_Correta'] == 1) { ?>
+
+                            <?php $status['green'] = true; ?>
+                        <?php } else { ?>
+                            <?php if ($row['Tentativas'] == 3) { ?>
+                                <?php $status['red'] = true; ?>
+                            <?php } ?>
+
+                        <?php } ?>
+                    <?php } ?>
+                <?php } ?>
+
+                <?php
+                if ($status['green']) {
+                    echo '<div class="w3-panel w3-border w3-round-xlarge"><h5 class="w3-center">Parabéns você acertou a questão, continue assim!</h5></div>';
+                } elseif ($status['red']) {
+                    echo '<div class="w3-panel w3-border w3-round-xlarge"><h5 class="w3-center">Infelizmente você não acertou a questão, mas continue você consegue!</h5></div>';
+                } else {
+                    ?>
                     <button class="w3-round-large w3-bar-item w3-btn w3-light-grey" style="font-size:32px;" onclick="document.getElementById('id01').style.display = 'block'">
                         <i class="fa fa-check-square-o w3-round-large"	style="font-size:32px;color:green">
                         </i>
                         <h5>Confirmar</h5>
                     </button>
-                    
-                    <button class="w3-round-large w3-bar-item w3-btn w3-light-grey" style="font-size:32px;" type="submit" value="salvar">
-                        <i class="fa fa-fast-forward" style="font-size:32px"></i>
-                        <h5>Pular</h5>
-                    </button>
+
                     <button class="w3-round-large w3-bar-item w3-btn w3-light-grey" style="font-size:32px;">
                         <i class="fa fa-info-circle"	style="font-size:32px"></i>
                         <h5>Ajuda?</h5>
@@ -74,8 +93,8 @@
                         <i class="fa fa-ban w3-btn	w3-round-large" style="font-size:32px;"></i>
                         <h5>Cancelar</h5>
                     </button>
+<?php } ?>
+            </p>
+        </form>
 
-                </p>
-            </form>
-
-        </div>
+    </div>

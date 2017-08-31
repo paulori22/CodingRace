@@ -209,8 +209,10 @@ class Aluno extends MY_Controller
         $data['alternativas'] = $this->qme_model->GetByIdExercicio($idExercicio);
         $data['topico'] = $this->topicos_model->GetById($data['exercicio']['Topico_idTopico']);
         
-        $data['exercicio']['total_de_exercicios_de_um_topico'] = $this->exercicio_model->getTotalNumberOfExercicesOfTopic($data['exercicio']['Topico_idTopico']);
-        $data['exercicios'] = $this->exercicio_model->GetByTopicoMaisId($data['exercicio']['Topico_idTopico']);
+        $data['exercicios'] = $this->exercicio_model->GetListaExerciciosAlunoTopico($data['exercicio']['Topico_idTopico'], $this->session->userdata('ra'));
+        
+        $data['status']['green'] = 0;
+        $data['status']['red'] = 0;
         
         $data['nome'] = $this->session->userdata('nome');
         $data['ra'] = $this->session->userdata('ra');
