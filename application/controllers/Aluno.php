@@ -284,14 +284,23 @@ class Aluno extends MY_Controller
                 'Resposta' => $opcao,
             );
             $status = $this->usuario_has_resposta_model->Inserir($dados_resposta);
+            
             if (!$status){
                 $this->session->set_flashdata('error', 'Não foi possível inserir o histórico!');
                 self::ExerciciosTopico($exercicio['Topico_idTopico']);
             } else {
                 $tentativas = $this->usuario_has_resposta_model->GetTentativasExercicios($idExercicio, $this->session->userdata('ra'));
                 $this->usuario_has_curso_model->AdicionarPontosCursoAluno($exercicio['Pontos'],$ra,$this->session->userdata('Curso_PIN'),$tentativas);     
-  
                 $this->session->set_flashdata('error', 'Histórico inserido com sucesso!');
+                
+                $proximo_exercicio = $this->exercicio_model->GetProximoExercicio($idExercicio,$exercicio['Topico_idTopico']);
+                
+                if (is_null($proximo_exercicio)) {
+                    self::Topicos_Cursos($this->session->userdata('Curso_PIN'));
+                } else {
+                    self::RealizaExercicio($proximo_exercicio);
+                }
+
                 self::ExerciciosTopico($exercicio['Topico_idTopico']);
             }
         } else {

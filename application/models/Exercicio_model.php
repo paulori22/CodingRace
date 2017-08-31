@@ -74,7 +74,23 @@ class Exercicio_model extends MY_Model {
             return null;
         }
     }
-   
+    
+    function GetProximoExercicio($idExercicio,$idTopico){
+        if(is_null($idExercicio) || is_null($idTopico))
+            return false;
+        $this->db->where('Topico_idTopico', $idTopico);
+        $this->db->where('idExercicio >', $idExercicio);
+        $this->db->limit(1);
+        
+        $query = $this->db->get($this->table);
+        if ($query->num_rows() > 0) {
+            return $query->row()->idExercicio;
+        } else {
+            
+            return null;
+        }
+    }
+            
     function GetByTopicoOrderByBloom($idTopico, $sort = 'Categoria_Bloom', $order = 'asc') {
         if (is_null($idTopico))
             return false;
