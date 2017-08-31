@@ -70,4 +70,28 @@ class Usuario_has_curso_model extends MY_Model
         $this->db->where('Usuario_RA', $ra);
         return $this->db->delete($this->table);
     }
+    
+    public function AdicionarPontosCursoAluno($pontos,$ra,$pin,$tentativas)
+    {
+        if(is_null($pontos)  || is_null($ra) || is_null($pin))
+            return false;
+        if($tentativas==1){
+            $this->db->set('Pontuacao','Pontuacao + '.$pontos,FALSE);
+        }elseif($tentativas==2){
+            $this->db->set('Pontuacao','Pontuacao + '.((int)($pontos*(80/100))),FALSE);
+        }else{
+            $this->db->set('Pontuacao','Pontuacao + '.((int)($pontos*(60/100))),FALSE);
+        }
+        
+        $this->db->where('Usuario_RA',$ra);
+        $this->db->where('Curso_PIN',$pin);
+        
+        
+        $query = $this->db->update($this->table);
+        if ($query) {
+            return true;
+        } else {
+            return null;
+        }
+    }
 }

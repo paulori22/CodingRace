@@ -140,6 +140,10 @@ $route['home_aluno'] = 'Aluno/HomeAluno';
 $route['cursos_aluno'] = 'Aluno/CursosUsuario';
 $route['realizacurso_aluno/(:num)'] = 'Aluno/Topicos_Cursos/$1';
 
+/** Rota Leaderboard */
+
+$route['leaderboard'] = 'Aluno/Leaderboard';
+
 /** Rotas para cursos de usuario */
 $route['cadastracursos_aluno'] = 'Aluno/CadCursoUsuario';
 $route['excluircursousuario_aluno/(:num)'] = 'Aluno/ExcluiCursoUsuario/$1';

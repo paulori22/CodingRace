@@ -53,7 +53,7 @@ class Exercicio_model extends MY_Model {
         }
     }
     
-        function GetListaExerciciosAlunoTopico($idTopico,$ra) {
+    function GetListaExerciciosAlunoTopico($idTopico,$ra) {
         if (is_null($idTopico) || is_null($ra))
             return false;
         
@@ -74,7 +74,7 @@ class Exercicio_model extends MY_Model {
             return null;
         }
     }
-
+   
     function GetByTopicoOrderByBloom($idTopico, $sort = 'Categoria_Bloom', $order = 'asc') {
         if (is_null($idTopico))
             return false;

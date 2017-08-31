@@ -13,6 +13,24 @@ class Usuario_has_resposta_model extends MY_Model
         parent::__construct();
         $this->table = 'Usuario_has_Resposta';
     }
+    
+    function GetTentativasExercicios($idExercicio,$ra) {
+        
+        if (is_null($idExercicio) || is_null($ra))
+            return false;
+        
+        $sql = "SELECT COUNT(`idUsuario_has_Resposta`) as Tentativas\n"
+                . "FROM `Usuario_has_Resposta`\n"
+                . "WHERE `Exercicio_idExercicio` = $idExercicio AND `Usuario_RA` = $ra";
+        
+        $query = $this->db->query($sql);
+
+        if ($query->num_rows() > 0) {
+            return $query->row()->Tentativas;
+        } else {
+            return null;
+        }
+    }
 
 
 

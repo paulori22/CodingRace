@@ -28,6 +28,22 @@ class Aluno extends MY_Controller
         $this->load->view('homealuno_view');
         $this->load->view('commons/footer');
     }
+    
+    public function Leaderboard()
+    {
+        $this->load->model('usuario_has_curso_model');
+        $this->load->model('usuarios_model');
+        
+        $data['nome'] = $this->session->userdata('nome');
+        $data['ra'] = $this->session->userdata('ra');
+        $data['title'] = "Projeto TFG - Leaderboard";
+        $data['header'] = "Leaderboard";
+
+        $this->load->view('commons/header',$data);
+        $this->load->view('leaderboard/leaderboard');
+        $this->load->view('commons/footer');
+        
+    }
 
     public function EditaUsuario($ra)
     {
@@ -166,6 +182,8 @@ class Aluno extends MY_Controller
 
         $idTopico = $this->curso_has_topico_model->TopicosCursos($pin);
         $data['topicos'] = $this->topicos_model->GetBySomeId($idTopico);
+        
+        $this->session->set_userdata('Curso_PIN', $pin);
 
         $data['nome'] = $this->session->userdata('nome');
         $data['ra'] = $this->session->userdata('ra');
@@ -230,10 +248,13 @@ class Aluno extends MY_Controller
         $this->load->model('exercicio_model');
         $this->load->model('qme_model');
         $this->load->model('usuario_has_resposta_model');
+        $this->load->model('usuario_has_curso_model');
+        $this->load->model('curso_has_topico_model');
 
         $opcao = $this->input->post('opcao');
-
+          
         $exercicio = $this->exercicio_model->GetById($idExercicio);
+        
         $alternativa = $this->qme_model->GetByIdExercicio($idExercicio);
 
         if($opcao == $alternativa['Alternativa']){
@@ -254,6 +275,9 @@ class Aluno extends MY_Controller
                 $this->session->set_flashdata('error', 'Não foi possível inserir o histórico!');
                 self::ExerciciosTopico($exercicio['Topico_idTopico']);
             } else {
+                $tentativas = $this->usuario_has_resposta_model->GetTentativasExercicios($idExercicio, $this->session->userdata('ra'));
+                $this->usuario_has_curso_model->AdicionarPontosCursoAluno($exercicio['Pontos'],$ra,$this->session->userdata('Curso_PIN'),$tentativas);     
+  
                 $this->session->set_flashdata('error', 'Histórico inserido com sucesso!');
                 self::ExerciciosTopico($exercicio['Topico_idTopico']);
             }
