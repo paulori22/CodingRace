@@ -57,6 +57,12 @@ class Exercicio_model extends MY_Model {
         if (is_null($idTopico) || is_null($ra))
             return false;
         
+        if (!function_exists('sortByIdExercicio')) {
+            function sortByIdExercicio($a, $b) {
+                return $a['idExercicio'] - $b['idExercicio'];
+            }
+        }
+        
         $sql = "SELECT Exercicio.idExercicio, SUM(Usuario_has_Resposta.Resposta_Correta) AS Resposta_Correta, COUNT(Usuario_has_Resposta.Usuario_RA) AS Tentativas\n"
 
             . "FROM Exercicio\n"
@@ -89,6 +95,7 @@ class Exercicio_model extends MY_Model {
                 array_push($resultado, $element);
   
             }
+            usort($resultado, 'sortByIdExercicio');
             return $resultado;
         } else {
             $resultado = array();
@@ -99,9 +106,12 @@ class Exercicio_model extends MY_Model {
                 array_push($resultado, $element);
   
             }
+            
             return $resultado;
         }
     }
+    
+
     
     function GetProximoExercicio($idExercicio,$idTopico){
         if(is_null($idExercicio) || is_null($idTopico))

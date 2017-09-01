@@ -89,7 +89,7 @@
                         <i class="fa fa-info-circle"	style="font-size:32px"></i>
                         <h5>Ajuda?</h5>
                     </button>
-                    <button class="w3-bar-item w3-btn w3-light-grey" style="font-size:32px;" onclick="location.href = '<?php echo base_url('realizartopico_aluno') . "/" . $exercicio['Topico_idTopico']; ?>'" type="button">
+                    <button class="w3-bar-item w3-btn w3-light-grey" style="font-size:32px;" onclick="location.href = '<?php echo base_url('realizacurso_aluno') . "/" . $this->session->userdata['Curso_PIN']; ?>'" type="button">
                         <i class="fa fa-ban w3-btn	w3-round-large" style="font-size:32px;"></i>
                         <h5>Cancelar</h5>
                     </button>
