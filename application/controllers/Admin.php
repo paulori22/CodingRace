@@ -523,7 +523,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     $this->session->set_flashdata('error', 'Não foi possível cadastrar o Exercício!');
 
                     /** Carrega a view */
-                    $this->load->view('commons/header',$data);
+                    $this->load->view('commons/header_tinymce',$data);
                     $this->load->view('exercicio/novoexercicio_view');
                     $this->load->view('commons/footer');
                 }else{
@@ -543,7 +543,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         $this->session->set_flashdata('error', 'Não foi possível cadastrar o exercício, problema nas Respostas!');
 
                         /** Carrega a view */
-                        $this->load->view('commons/header',$data);
+                        $this->load->view('commons/header_tinymce',$data);
                         $this->load->view('exercicio/novoexercicio_view');
                         $this->load->view('commons/footer');
                     }else{
@@ -558,7 +558,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $data['header'] = "Novo Exercício";
 
                 /** Carrega a view */
-                $this->load->view('commons/header', $data);
+                $this->load->view('commons/header_tinymce', $data);
                 $this->load->view('exercicio/novoexercicio_view');
                 $this->load->view('commons/footer');
             }
@@ -603,7 +603,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $data['header'] = "Edita Exercício";
 
             /** Carrega a view */
-            $this->load->view('commons/header',$data);
+            $this->load->view('commons/header_tinymce',$data);
             $this->load->view('exercicio/editaexercicio_view');
             $this->load->view('commons/footer');
 

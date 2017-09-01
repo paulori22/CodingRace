@@ -414,7 +414,7 @@ class Professor extends MY_Controller
                 $this->session->set_flashdata('error', 'Não foi possível cadastrar o Exercício!');
 
                 /** Carrega a view */
-                $this->load->view('commons/header',$data);
+                $this->load->view('commons/header_tinymce',$data);
                 $this->load->view('exercicio/novoexercicio_view');
                 $this->load->view('commons/footer');
             }else{
@@ -434,7 +434,7 @@ class Professor extends MY_Controller
                     $this->session->set_flashdata('error', 'Não foi possível cadastrar o exercício, problema nas Respostas!');
 
                     /** Carrega a view */
-                    $this->load->view('commons/header',$data);
+                    $this->load->view('commons/header_tinymce',$data);
                     $this->load->view('exercicio/novoexercicio_view');
                     $this->load->view('commons/footer');
                 }else{
@@ -449,7 +449,7 @@ class Professor extends MY_Controller
             $data['header'] = "Novo Exercício";
 
             /** Carrega a view */
-            $this->load->view('commons/header', $data);
+            $this->load->view('commons/header_tinymce', $data);
             $this->load->view('exercicio/novoexercicio_view');
             $this->load->view('commons/footer');
         }
@@ -494,7 +494,7 @@ class Professor extends MY_Controller
         $data['header'] = "Edita Exercício";
 
         /** Carrega a view */
-        $this->load->view('commons/header',$data);
+        $this->load->view('commons/header_tinymce',$data);
         $this->load->view('exercicio/editaexercicio_view');
         $this->load->view('commons/footer');
 

@@ -63,15 +63,43 @@ class Exercicio_model extends MY_Model {
 
             . "LEFT JOIN Usuario_has_Resposta ON Exercicio.idExercicio=Usuario_has_Resposta.Exercicio_idExercicio\n"
 
-            . "WHERE Exercicio.Topico_idTopico=$idTopico AND (Usuario_has_Resposta.Usuario_RA=$ra OR Usuario_has_Resposta.Usuario_RA IS NULL)\n"
+            . "WHERE Exercicio.Topico_idTopico=$idTopico AND Usuario_has_Resposta.Usuario_RA=$ra \n"
 
             . "GROUP BY Exercicio.idExercicio";
+        
         $query = $this->db->query($sql);
 
         if ($query->num_rows() > 0) {
-            return $query->result_array();
+            $ids_topico = $this->GetByTopico($idTopico);
+            $resultado = $query->result_array();
+            
+            foreach($resultado as $i => $row)
+            {
+                foreach ($ids_topico as $j => $row2)
+                {
+                    if($row['idExercicio']==$row2['idExercicio']){
+                        unset($ids_topico[$j]);
+                    }
+                        
+                }
+            }
+            
+            foreach ($ids_topico as $row){
+                $element = array("idExercicio"=>$row['idExercicio'],"Resposta_Correta"=>0,"Tentativas"=>0);
+                array_push($resultado, $element);
+  
+            }
+            return $resultado;
         } else {
-            return null;
+            $resultado = array();
+            $ids_topico = $this->GetByTopico($idTopico);
+            
+            foreach ($ids_topico as $row){
+                $element = array("idExercicio"=>$row['idExercicio'],"Resposta_Correta"=>0,"Tentativas"=>0);
+                array_push($resultado, $element);
+  
+            }
+            return $resultado;
         }
     }
     
