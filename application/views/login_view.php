@@ -16,15 +16,16 @@
             <?php endif; ?>
             <form class="w3-container w3-card-4" method="post" >
                 <p>
-                    <input class="w3-input" type="text" style="width:90%" name="ra" id="ra" value="<?=set_value('ra')?>">
+                    <input class="w3-input" type="text" style="width:100%" name="ra" id="ra" value="<?=set_value('ra')?>">
                     <label class="w3-label w3-text-blue w3-validate">RA</label></p>
                 <p>
-                    <input class="w3-input" type="password" style="width:90%" name="senha" id="senha" value="<?=set_value('senha')?>">
+                    <input class="w3-input" type="password" style="width:100%" name="senha" id="senha" value="<?=set_value('senha')?>">
                     <label class="w3-label w3-text-blue w3-validate">Senha</label></p>
                 <p>
-                    <button class="w3-btn w3-section w3-blue w3-ripple" type="submit" value="entrar"> Entrar </button></p>
-                <p>
-                    <a  href="<?=base_url('new_user')?>" style="color: blue">Novo Usuário</a>
+                    <button class="w3-btn w3-section w3-blue w3-ripple" type="submit" value="entrar"> Entrar </button>
+   
+                    <a  class="w3-section w3-right" href="<?=base_url('new_user')?>" style="color: blue">Novo Usuário</a>
+                </p>
             </form>
 
         </div>
