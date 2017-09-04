@@ -14,7 +14,7 @@
                     <tr class="w3-light-grey">
                         <th>Posição</th>
                         <th>Nome</th>
-                        <th>Progresso Total</th>
+                        <th>Pontuação Total</th>
                         <th>Troféus</th>
                         <th>Medalhas</th>
                     </tr>
@@ -24,11 +24,14 @@
                         <tr><td colspan="2">Nenhum aluno registrado no curso</td></tr>
                     <?php else: ?>
                         <?php if (isset($alunos_curso)): ?>
+                        <?php $posicao=1;?>
                             <?php foreach ($alunos_curso as $row): ?>
                                 <tr>
-                                    <td><?= $row['Usuario_RA'] ?></td>
+                                    <td><?= $posicao ?></td>
+                                    <td><?= $row['Nome'] ?></td>
                                     <td><?= $row['Pontuacao'] ?></td>
                                 </tr>
+                                <?php $posicao++;?>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     <?php endif; ?>

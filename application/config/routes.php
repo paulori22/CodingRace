@@ -143,6 +143,7 @@ $route['realizacurso_aluno/(:num)'] = 'Aluno/Topicos_Cursos/$1';
 /** Rota Leaderboard */
 
 $route['leaderboard'] = 'Aluno/Leaderboard';
+$route['leaderboard_curso/(:num)'] = 'Aluno/LeaderboardCurso/$1';
 
 /** Rotas para cursos de usuario */
 $route['cadastracursos_aluno'] = 'Aluno/CadCursoUsuario';
