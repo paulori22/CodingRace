@@ -33,15 +33,32 @@ class Aluno extends MY_Controller
     {
         $this->load->model('usuario_has_curso_model');
         $this->load->model('usuarios_model');
+        $this->load->model('cursos_model');
         
         $data['nome'] = $this->session->userdata('nome');
         $data['ra'] = $this->session->userdata('ra');
         $data['title'] = "Projeto TFG - Leaderboard";
-        $data['header'] = "Leaderboard";
+        
+        
+        
+        if($this->usuario_has_curso_model->QuantidadeCursosAluno($data['ra']) == 1)
+        {
+            $curso_PIN = $this->usuario_has_curso_model->CursosUsuario($data['ra'])[0]['Curso_PIN'];
+ 
+            $data['curso'] = $this->cursos_model->GetByPIN($curso_PIN);
+            $data['header'] = "Leaderboard - ".$data['curso']['Nome'];
+            $data['alunos_curso'] = $this->usuario_has_curso_model->UsuariosCursoLeaderboard($curso_PIN);
+           
+            $this->load->view('commons/header', $data);
+            $this->load->view('leaderboard/leaderboard');
+            $this->load->view('commons/footer');
+        }else
+        {
+            
+        }
+            
 
-        $this->load->view('commons/header',$data);
-        $this->load->view('leaderboard/leaderboard');
-        $this->load->view('commons/footer');
+
         
     }
 

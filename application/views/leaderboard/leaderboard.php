@@ -1,42 +1,38 @@
 <body class="w3-light-grey">
 
-<?php $this->load->view('commons/menulateral')?>
+    <?php $this->load->view('commons/menulateral') ?>
 
-<!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+    <!-- !PAGE CONTENT! -->
+    <div class="w3-main" style="margin-left:300px;margin-top:43px;">
 
-  <?php $this->load->view('commons/menupagina')?>
+        <?php $this->load->view('commons/menupagina') ?>
 
-  <div class="w3-container">
-    <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
-      <h3>Ranking geral:</h3>
-    <tr>
-        <td>Posição</td>
-        <td>Nome</td>
-        <td>Progesso Total</td>
-        <td>Troféus</td>
-        <td>Medalhas</td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>Aluno A</td>
-        <td>40%</td>
-        <td>10</td>
-        <td>25</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>Aluno B</td>
-        <td>20%</td>
-        <td>2</td>
-        <td>8</td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>Aluno C</td>
-        <td>10%</td>
-        <td>1</td>
-        <td>4</td>
-      </tr>
-    </table><br>
-  </div>
+        <div class="w3-container">
+            <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+                <h3>Ranking geral:</h3>
+                <thead>
+                    <tr class="w3-light-grey">
+                        <th>Posição</th>
+                        <th>Nome</th>
+                        <th>Progresso Total</th>
+                        <th>Troféus</th>
+                        <th>Medalhas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if ($alunos_curso == FALSE): ?>
+                        <tr><td colspan="2">Nenhum aluno registrado no curso</td></tr>
+                    <?php else: ?>
+                        <?php if (isset($alunos_curso)): ?>
+                            <?php foreach ($alunos_curso as $row): ?>
+                                <tr>
+                                    <td><?= $row['Usuario_RA'] ?></td>
+                                    <td><?= $row['Pontuacao'] ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+            
+        </div>
