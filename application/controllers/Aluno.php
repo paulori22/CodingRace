@@ -41,6 +41,7 @@ class Aluno extends MY_Controller {
 
             $curso_PIN = $this->usuario_has_curso_model->CursosUsuario($data['ra'])[0]['Curso_PIN'];
             $data['curso'] = $this->cursos_model->GetByPIN($curso_PIN);
+            $data['total_pontos_curso'] = $this->cursos_model->GetTotalPontosCurso($curso_PIN);
 
             $data['header'] = "Leaderboard - " . $data['curso']['Nome'];
             $data['alunos_curso'] = $this->usuario_has_curso_model->UsuariosCursoLeaderboard($curso_PIN);
@@ -60,6 +61,7 @@ class Aluno extends MY_Controller {
     }
     
     public function LeaderboardCurso($curso_PIN) {
+        
         $this->load->model('usuario_has_curso_model');
         $this->load->model('usuarios_model');
         $this->load->model('cursos_model');
@@ -69,6 +71,7 @@ class Aluno extends MY_Controller {
         $data['title'] = "Projeto TFG - Leaderboard";
 
         $data['curso'] = $this->cursos_model->GetByPIN($curso_PIN);
+        $data['total_pontos_curso'] = $this->cursos_model->GetTotalPontosCurso($curso_PIN);
 
         $data['header'] = "Leaderboard - " . $data['curso']['Nome'];
         $data['alunos_curso'] = $this->usuario_has_curso_model->UsuariosCursoLeaderboard($curso_PIN);

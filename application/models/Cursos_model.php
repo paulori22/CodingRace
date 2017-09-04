@@ -58,4 +58,30 @@ class Cursos_model extends MY_Model
             return null;
         }
     }
+    
+    function GetTotalPontosCurso($curso_PIN){
+        
+        if(is_null($curso_PIN))
+            return false;
+        
+        $sql = "SELECT SUM(Exercicio.Pontos) as PontuacaoTotal\n"
+
+        . "FROM Curso\n"
+
+        . "JOIN Curso_has_Topico ON Curso.PIN=Curso_has_Topico.Curso_PIN\n"
+
+        . "JOIN Exercicio ON Curso_has_Topico.Topico_idTopico=Exercicio.Topico_idTopico\n"
+
+        . "WHERE Curso.PIN=$curso_PIN";
+        
+        $query = $this->db->query($sql);
+
+        if ($query->num_rows() > 0) {
+            return $query->row()->PontuacaoTotal;
+
+        } else {
+            return null;
+        }
+
+    }
 }
