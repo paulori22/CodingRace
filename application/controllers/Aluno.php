@@ -329,8 +329,6 @@ class Aluno extends MY_Controller {
                 } else {
                     self::RealizaExercicio($proximo_exercicio);
                 }
-
-                self::ExerciciosTopico($exercicio['Topico_idTopico']);
             }
         } else {
             echo "<script> window.alert('Resposta Incorreta!!')</script>";
