@@ -82,6 +82,62 @@ class Aluno extends MY_Controller {
 
         
     }
+    
+    public function Minhas_Conquistas() {
+        $this->load->model('usuario_has_curso_model');
+        $this->load->model('usuarios_model');
+        $this->load->model('cursos_model');
+        $this->load->model('medalha_model');
+
+        $data['nome'] = $this->session->userdata('nome');
+        $data['ra'] = $this->session->userdata('ra');
+        $data['title'] = "Projeto TFG - Minhas Conquistas";
+
+        if ($this->usuario_has_curso_model->QuantidadeCursosAluno($data['ra']) == 1) {
+
+            $curso_PIN = $this->usuario_has_curso_model->CursosUsuario($data['ra'])[0]['Curso_PIN'];
+            $data['curso'] = $this->cursos_model->GetByPIN($curso_PIN);    
+            
+            $data['header'] = "Minhas Conquistas - " . $data['curso']['Nome'];
+            
+            $data['medalha'] = $this->medalha_model->getMedalhaID(1);
+
+
+            $this->load->view('commons/header', $data);
+            $this->load->view('minhas_conquistas/minhas_conquistas');
+            $this->load->view('commons/footer');
+        } else {
+            $data['header'] = "Escolha o curso que deseja ver Minhas Conquistas";
+            $pin = $this->usuario_has_curso_model->CursosUsuario($data['ra']);
+            $data['cursos'] = $this->cursos_model->GetBySomePIN($pin);
+
+            $this->load->view('commons/header', $data);
+            $this->load->view('minhas_conquistas/cursos_view');
+            $this->load->view('commons/footer');
+        }
+    }
+    
+    public function Minhas_ConquistasCurso($curso_PIN) {
+        
+        $this->load->model('usuario_has_curso_model');
+        $this->load->model('usuarios_model');
+        $this->load->model('cursos_model');
+
+        $data['nome'] = $this->session->userdata('nome');
+        $data['ra'] = $this->session->userdata('ra');
+        $data['title'] = "Projeto TFG - Leaderboard";
+
+        $data['curso'] = $this->cursos_model->GetByPIN($curso_PIN);
+
+        $data['header'] = "Minhas Conquistas - " . $data['curso']['Nome'];
+       
+
+        $this->load->view('commons/header', $data);
+        $this->load->view('minhas_conquistas/minhas_conquistas');
+        $this->load->view('commons/footer');
+
+        
+    }
 
     public function EditaUsuario($ra) {
         if ($ra == $this->session->userdata('ra')) {
