@@ -24,10 +24,20 @@
             <div class="w3-quarter">
                 <h3>Medalhas:</h3>
                 <div class="w3-row">
-                <img src="<?php echo $medalha['Imagem']?>"
-                     style="width:100px;height:100px;" class="w3-circle" alt="1a Medalha" title="Bem-vindo">
-                <p><?php echo '<b>'.$medalha['Nome'].'</b>'?></p>
+                <?php if ($medalhas == FALSE): ?>
+                <h3>Você ainda não tem nenhuma medalha neste curso</h3>
+                <?php else: ?>
+                    <?php if (isset($medalhas)): ?>
+                        <?php foreach ($medalhas as $row): ?>
+                            <img src="<?php echo base_url().$row['Imagem'] ?>"
+                                style="width:100px;height:100px;" class="w3-circle" alt="<?=  $row['Nome'] ?>" title="<?=  $row['Nome'] ?>">
+                                <p><?= '<b>' . $row['Nome'] . '</b>' ?></p>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                <?php endif; ?>
                 </div>
+
                 
+
             </div>
         </div>

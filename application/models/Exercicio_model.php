@@ -24,7 +24,6 @@ class Exercicio_model extends MY_Model {
             return null;
         }
     }
-    
 
     function GetByTopico($idTopico) {
         if (is_null($idTopico))
@@ -52,83 +51,92 @@ class Exercicio_model extends MY_Model {
             return null;
         }
     }
-    
-    function GetListaExerciciosAlunoTopico($idTopico,$ra) {
+
+    function GetListaExerciciosAlunoTopico($idTopico, $ra, $pin) {
         if (is_null($idTopico) || is_null($ra))
             return false;
-        
+
         if (!function_exists('sortByIdExercicio')) {
+
             function sortByIdExercicio($a, $b) {
                 return $a['idExercicio'] - $b['idExercicio'];
             }
+
         }
-        
+
         $sql = "SELECT Exercicio.idExercicio, SUM(Usuario_has_Resposta.Resposta_Correta) AS Resposta_Correta, COUNT(Usuario_has_Resposta.Usuario_RA) AS Tentativas\n"
+                . "FROM Exercicio\n"
+                . "LEFT JOIN Usuario_has_Resposta ON Exercicio.idExercicio=Usuario_has_Resposta.Exercicio_idExercicio\n"
+                . "WHERE Exercicio.Topico_idTopico=$idTopico AND Usuario_has_Resposta.Usuario_RA=$ra AND Usuario_has_Resposta.Curso_PIN=$pin \n"
+                . "GROUP BY Exercicio.idExercicio";
 
-            . "FROM Exercicio\n"
-
-            . "LEFT JOIN Usuario_has_Resposta ON Exercicio.idExercicio=Usuario_has_Resposta.Exercicio_idExercicio\n"
-
-            . "WHERE Exercicio.Topico_idTopico=$idTopico AND Usuario_has_Resposta.Usuario_RA=$ra \n"
-
-            . "GROUP BY Exercicio.idExercicio";
-        
         $query = $this->db->query($sql);
 
         if ($query->num_rows() > 0) {
             $ids_topico = $this->GetByTopico($idTopico);
             $resultado = $query->result_array();
-            
-            foreach($resultado as $i => $row)
-            {
-                foreach ($ids_topico as $j => $row2)
-                {
-                    if($row['idExercicio']==$row2['idExercicio']){
+
+            foreach ($resultado as $i => $row) {
+                foreach ($ids_topico as $j => $row2) {
+                    if ($row['idExercicio'] == $row2['idExercicio']) {
                         unset($ids_topico[$j]);
                     }
-                        
                 }
             }
-            
-            foreach ($ids_topico as $row){
-                $element = array("idExercicio"=>$row['idExercicio'],"Resposta_Correta"=>0,"Tentativas"=>0);
+
+            foreach ($ids_topico as $row) {
+                $element = array("idExercicio" => $row['idExercicio'], "Resposta_Correta" => 0, "Tentativas" => 0);
                 array_push($resultado, $element);
-  
             }
             usort($resultado, 'sortByIdExercicio');
             return $resultado;
         } else {
             $resultado = array();
             $ids_topico = $this->GetByTopico($idTopico);
-            
-            foreach ($ids_topico as $row){
-                $element = array("idExercicio"=>$row['idExercicio'],"Resposta_Correta"=>0,"Tentativas"=>0);
+
+            foreach ($ids_topico as $row) {
+                $element = array("idExercicio" => $row['idExercicio'], "Resposta_Correta" => 0, "Tentativas" => 0);
                 array_push($resultado, $element);
-  
             }
-            
+
             return $resultado;
         }
     }
-    
 
-    
-    function GetProximoExercicio($idExercicio,$idTopico){
-        if(is_null($idExercicio) || is_null($idTopico))
+    function acertouTodosOsExerciciosDoTopico($id_topico,$ra, $pin) {
+
+        $sql = "SELECT Exercicio.idExercicio, SUM(Usuario_has_Resposta.Resposta_Correta) AS Resposta_Correta, COUNT(Usuario_has_Resposta.Usuario_RA) AS Tentativas\n"
+                . "FROM Exercicio\n"
+                . "LEFT JOIN Usuario_has_Resposta ON Exercicio.idExercicio=Usuario_has_Resposta.Exercicio_idExercicio\n"
+                . "WHERE Exercicio.Topico_idTopico=$id_topico AND Usuario_has_Resposta.Usuario_RA=$ra AND Resposta_Correta = 1 AND Usuario_has_Resposta.Curso_PIN=$pin \n"
+                . "GROUP BY Exercicio.idExercicio";
+        
+        $query = $this->db->query($sql);
+        $numero_exercicio_topico = $this->getTotalNumberOfExercicesOfTopic($id_topico);
+        
+        if($query->num_rows() == $numero_exercicio_topico)
+            return true;
+        else
+            return false;
+ 
+    }
+
+    function GetProximoExercicio($idExercicio, $idTopico) {
+        if (is_null($idExercicio) || is_null($idTopico))
             return false;
         $this->db->where('Topico_idTopico', $idTopico);
         $this->db->where('idExercicio >', $idExercicio);
         $this->db->limit(1);
-        
+
         $query = $this->db->get($this->table);
         if ($query->num_rows() > 0) {
             return $query->row()->idExercicio;
         } else {
-            
+
             return null;
         }
     }
-            
+
     function GetByTopicoOrderByBloom($idTopico, $sort = 'Categoria_Bloom', $order = 'asc') {
         if (is_null($idTopico))
             return false;

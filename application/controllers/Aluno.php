@@ -59,9 +59,9 @@ class Aluno extends MY_Controller {
             $this->load->view('commons/footer');
         }
     }
-    
+
     public function LeaderboardCurso($curso_PIN) {
-        
+
         $this->load->model('usuario_has_curso_model');
         $this->load->model('usuarios_model');
         $this->load->model('cursos_model');
@@ -79,15 +79,13 @@ class Aluno extends MY_Controller {
         $this->load->view('commons/header', $data);
         $this->load->view('leaderboard/leaderboard');
         $this->load->view('commons/footer');
-
-        
     }
-    
+
     public function Minhas_Conquistas() {
         $this->load->model('usuario_has_curso_model');
         $this->load->model('usuarios_model');
         $this->load->model('cursos_model');
-        $this->load->model('medalha_model');
+        $this->load->model('usuario_has_medalha_model');
 
         $data['nome'] = $this->session->userdata('nome');
         $data['ra'] = $this->session->userdata('ra');
@@ -96,11 +94,11 @@ class Aluno extends MY_Controller {
         if ($this->usuario_has_curso_model->QuantidadeCursosAluno($data['ra']) == 1) {
 
             $curso_PIN = $this->usuario_has_curso_model->CursosUsuario($data['ra'])[0]['Curso_PIN'];
-            $data['curso'] = $this->cursos_model->GetByPIN($curso_PIN);    
-            
+            $data['curso'] = $this->cursos_model->GetByPIN($curso_PIN);
+
             $data['header'] = "Minhas Conquistas - " . $data['curso']['Nome'];
-            
-            $data['medalha'] = $this->medalha_model->getMedalhaID(1);
+
+            $data['medalhas'] = $this->usuario_has_medalha_model->getTodasMedalhas($data['ra'],$curso_PIN);
 
 
             $this->load->view('commons/header', $data);
@@ -116,27 +114,28 @@ class Aluno extends MY_Controller {
             $this->load->view('commons/footer');
         }
     }
-    
+
     public function Minhas_ConquistasCurso($curso_PIN) {
-        
+
         $this->load->model('usuario_has_curso_model');
         $this->load->model('usuarios_model');
         $this->load->model('cursos_model');
+        $this->load->model('usuario_has_medalha_model');
 
         $data['nome'] = $this->session->userdata('nome');
         $data['ra'] = $this->session->userdata('ra');
         $data['title'] = "Projeto TFG - Leaderboard";
 
         $data['curso'] = $this->cursos_model->GetByPIN($curso_PIN);
+        
+        $data['medalhas'] = $this->usuario_has_medalha_model->getTodasMedalhas($data['ra'],$curso_PIN);
 
         $data['header'] = "Minhas Conquistas - " . $data['curso']['Nome'];
-       
+
 
         $this->load->view('commons/header', $data);
         $this->load->view('minhas_conquistas/minhas_conquistas');
         $this->load->view('commons/footer');
-
-        
     }
 
     public function EditaUsuario($ra) {
@@ -280,7 +279,7 @@ class Aluno extends MY_Controller {
         // $data['exercicios_topicos'] = array();
         foreach ($data['topicos'] as $row) {
 
-            $data['exercicios_topicos'][$row['Nome']] = $this->exercicio_model->GetListaExerciciosAlunoTopico($row['idTopico'], $this->session->userdata('ra'));
+            $data['exercicios_topicos'][$row['Nome']] = $this->exercicio_model->GetListaExerciciosAlunoTopico($row['idTopico'], $this->session->userdata('ra'), $pin);
         }
 
         $this->session->set_userdata('Curso_PIN', $pin);
@@ -326,7 +325,7 @@ class Aluno extends MY_Controller {
         $data['alternativas'] = $this->qme_model->GetByIdExercicio($idExercicio);
         $data['topico'] = $this->topicos_model->GetById($data['exercicio']['Topico_idTopico']);
 
-        $data['exercicios'] = $this->exercicio_model->GetListaExerciciosAlunoTopico($data['exercicio']['Topico_idTopico'], $this->session->userdata('ra'));
+        $data['exercicios'] = $this->exercicio_model->GetListaExerciciosAlunoTopico($data['exercicio']['Topico_idTopico'], $this->session->userdata('ra'), $this->session->userdata('Curso_PIN'));
 
         $data['status']['green'] = 0;
         $data['status']['red'] = 0;
@@ -355,13 +354,16 @@ class Aluno extends MY_Controller {
 
         $alternativa = $this->qme_model->GetByIdExercicio($idExercicio);
 
+        $ra = $this->session->userdata('ra');
+        $curso_pin = $this->session->userdata('Curso_PIN');
+        date_default_timezone_set('America/Sao_Paulo');
+        $data_exercicio = date('Y/m/d H:i:s', time());
+
         if ($opcao == $alternativa['Alternativa']) {
             echo "<script> window.alert('Resposta Correta!!')</script>";
-            $ra = $this->session->userdata('ra');
-            date_default_timezone_set('America/Sao_Paulo');
-            $data_exercicio = date('Y/m/d H:i:s', time());
             $dados_resposta = array(
                 'Usuario_RA' => $ra,
+                'Curso_PIN' => $curso_pin,
                 'Exercicio_idExercicio' => $idExercicio,
                 'Historico_Respostas' => $data_exercicio,
                 'Dificuldade' => 1,
@@ -374,25 +376,25 @@ class Aluno extends MY_Controller {
                 $this->session->set_flashdata('error', 'Não foi possível inserir o histórico!');
                 self::ExerciciosTopico($exercicio['Topico_idTopico']);
             } else {
-                $tentativas = $this->usuario_has_resposta_model->GetTentativasExercicios($idExercicio, $this->session->userdata('ra'));
-                $this->usuario_has_curso_model->AdicionarPontosCursoAluno($exercicio['Pontos'], $ra, $this->session->userdata('Curso_PIN'), $tentativas);
+                $tentativas = $this->usuario_has_resposta_model->GetTentativasExercicios($idExercicio, $ra);
+                $this->usuario_has_curso_model->AdicionarPontosCursoAluno($exercicio['Pontos'], $ra, $curso_pin, $tentativas);
                 $this->session->set_flashdata('error', 'Histórico inserido com sucesso!');
 
                 $proximo_exercicio = $this->exercicio_model->GetProximoExercicio($idExercicio, $exercicio['Topico_idTopico']);
-
+                $this->verificaMedalhas($exercicio['Topico_idTopico']);
+                
                 if (is_null($proximo_exercicio)) {
-                    self::Topicos_Cursos($this->session->userdata('Curso_PIN'));
+                    self::Topicos_Cursos($curso_pin);
                 } else {
                     self::RealizaExercicio($proximo_exercicio);
                 }
             }
         } else {
             echo "<script> window.alert('Resposta Incorreta!!')</script>";
-            date_default_timezone_set('America/Sao_Paulo');
-            $ra = $this->session->userdata('ra');
-            $data_exercicio = date('Y/m/d H:i:s', time());
+
             $dados_resposta = array(
                 'Usuario_RA' => $ra,
+                'Curso_PIN' => $curso_pin,
                 'Exercicio_idExercicio' => $idExercicio,
                 'Historico_Respostas' => $data_exercicio,
                 'Dificuldade' => 1,
@@ -406,6 +408,54 @@ class Aluno extends MY_Controller {
                 $this->session->set_flashdata('error', 'Histórico inserido com sucesso!');
                 self::RealizaExercicio($idExercicio);
             }
+        }
+    }
+
+    public function verificaMedalhas($id_topico) {
+        $this->load->model('exercicio_model');
+        $this->load->model('usuario_has_medalha_model');
+        
+        $ra = $this->session->userdata('ra');
+
+        if ($this->exercicio_model->acertouTodosOsExerciciosDoTopico($id_topico, $ra, $this->session->userdata('Curso_PIN'))) {
+
+            switch ($id_topico) {
+                case 1:
+                    $idMedalha = 1;
+                    break;
+                case 2:
+                    $idMedalha = 2;
+                    break;
+                case 3:
+                    $idMedalha = 9;
+                    break;
+                case 4:
+                    $idMedalha = 4;
+                    break;
+                case 5:
+                    $idMedalha = 10;
+                    break;
+                case 6:
+                    $idMedalha = 6;
+                    break;
+                case 7:
+                    $idMedalha = 7;
+                    break;
+                case 8:
+                    $idMedalha = 8;
+                    break;
+                default:
+                    $idMedalha = NULL;
+                    break;
+            }
+            date_default_timezone_set('America/Sao_Paulo');
+            $data_conquista = date('Y/m/d H:i:s', time());
+            $dados_medalha = array(
+                'Usuario_RA' => $ra,
+                'idMedalha' => $idMedalha,
+                'Data_Conquista' => $data_conquista,
+            );
+            $status = $this->usuario_has_medalha_model->Inserir($dados_medalha);
         }
     }
 

@@ -1,12 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-/**
- * Created by PhpStorm.
- * User: ranieri
- * Date: 05/03/17
- * Time: 18:24
- */
 class Medalha_model extends MY_Model
 {
     function __construct()
