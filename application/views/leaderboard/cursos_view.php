@@ -40,7 +40,7 @@
                                         <td><?=$row['PIN']?></td>
                                         <td><?=$row['Ano']?></td>
                                         <td><?=$row['Periodo']?></td>
-                                        <td><a href="<?=base_url('leaderboard_curso')."/".$row['PIN']?>" style="text-decoration: none"><i class="w3-xlarge fa fa-edit">&nbsp;</i></a></td>
+                                        <td><a href="<?=base_url('leaderboard_curso')."/".$row['PIN']?>" style="text-decoration: none"><i class="w3-xlarge fa fa-eye">&nbsp;</i></a></td>
                                     </tr>
                                 <?php endforeach;?>
                             <?php endif; ?>

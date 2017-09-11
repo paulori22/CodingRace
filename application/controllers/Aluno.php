@@ -124,7 +124,7 @@ class Aluno extends MY_Controller {
 
         $data['nome'] = $this->session->userdata('nome');
         $data['ra'] = $this->session->userdata('ra');
-        $data['title'] = "Projeto TFG - Leaderboard";
+        $data['title'] = "Projeto TFG - Minhas Conquistas";
 
         $data['curso'] = $this->cursos_model->GetByPIN($curso_PIN);
         

@@ -74,13 +74,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     $senha = $this->input->post('senha');
                     $email = $this->input->post('email');
                     $ra = $this->input->post('ra');
+                    $tipo_usuario = $this->input->post('tipo_usuario');
                     $dados_usuario = array(
                         'Nome' => $nome,
                         'Email' => $email,
                         'Senha' => $senha,
                         'RA' => $ra,
                         'Status' => 0,
-                        'Tipo_Usuario' => 0
+                        'Tipo_Usuario' => $tipo_usuario
                     );
                     $status = $this->usuarios_model->Inserir($dados_usuario);
                     if (!$status) {
