@@ -7,21 +7,30 @@
 
         <?php $this->load->view('commons/menupagina') ?>
 
-        <div class="w3-row-padding w3-margin-bottom">
-            <div class="w3-quarter">
-                <h3>Troféus:</h3>
-                <div class="w3-right">
-                </div>
-                <div class="w3-clear"></div>
-                <img src=""
-                     style="width:100px;height:100px;" class="w3-circle" alt="1a Medalha" title="Bem-vindo">
-            </div>
+        <!-- Trofeus grid -->
+        <div class="w3-row-padding w3-margin-top">
+            <h3>Troféus:</h3>
+
+            <?php if ($trofeus == FALSE): ?>
+                <h3>Você ainda não tem troféus neste curso</h3>
+            <?php else: ?>
+                <?php if (isset($trofeus)): ?>
+                    <?php foreach ($trofeus as $row): ?>
+                        <div class="w3-third" style="text-align: center">
+                            <img src="<?php echo base_url() . $row['Imagem'] ?>"
+                                 style="width:60%" onclick="onClick(this,'<?= $row['Descricao'] ?>','<?= date('d/m/Y h:m:s', strtotime($row['Data_Conquista'])) ?>')" alt="<?= $row['Nome'] ?>" title="<?= $row['Nome'] ?>">
+
+                            <div ><b><?= $row['Nome'] ?></b></div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            <?php endif; ?>
         </div>
 
         <hr>
 
 
-        <!-- Photo grid -->
+        <!-- Medalhas grid -->
         <div class="w3-row-padding w3-margin-top">
             <h3>Medalhas:</h3>
 
@@ -30,12 +39,11 @@
                 <?php else: ?>
                     <?php if (isset($medalhas)): ?>
                         <?php foreach ($medalhas as $row): ?>
-                            <div class="w3-third">
-                                <div id="descricao" style="display: none;"><?= $row['Descricao'] ?></div>
+                            <div class="w3-third" style="text-align: center">
                                 <img src="<?php echo base_url() . $row['Imagem'] ?>"
-                                     style="width:100%" onclick="onClick(this,'<?= $row['Descricao'] ?>','<?= date('d/m/Y h:m:s', strtotime($row['Data_Conquista'])) ?>')" alt="<?= $row['Nome'] ?>" title="<?= $row['Nome'] ?>">
+                                     style="width:60%" onclick="onClick(this,'<?= $row['Descricao'] ?>','<?= date('d/m/Y h:m:s', strtotime($row['Data_Conquista'])) ?>')" alt="<?= $row['Nome'] ?>" title="<?= $row['Nome'] ?>">
                             
-                                <div class="w3-center"><b><?= $row['Nome'] ?></b></div>
+                                <div><?= $row['Nome'] ?></div>
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>

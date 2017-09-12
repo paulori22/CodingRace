@@ -86,6 +86,7 @@ class Aluno extends MY_Controller {
         $this->load->model('usuarios_model');
         $this->load->model('cursos_model');
         $this->load->model('usuario_has_medalha_model');
+        $this->load->model('usuario_has_trofeu_model');
 
         $data['nome'] = $this->session->userdata('nome');
         $data['ra'] = $this->session->userdata('ra');
@@ -99,6 +100,8 @@ class Aluno extends MY_Controller {
             $data['header'] = "Minhas Conquistas - " . $data['curso']['Nome'];
 
             $data['medalhas'] = $this->usuario_has_medalha_model->getTodasMedalhas($data['ra'],$curso_PIN);
+
+            $data['trofeus'] = $this->usuario_has_trofeu_model->getTodosTrofeus($data['ra'],$curso_PIN);
 
 
             $this->load->view('commons/header', $data);
@@ -121,6 +124,7 @@ class Aluno extends MY_Controller {
         $this->load->model('usuarios_model');
         $this->load->model('cursos_model');
         $this->load->model('usuario_has_medalha_model');
+        $this->load->model('usuario_has_trofeu_model');
 
         $data['nome'] = $this->session->userdata('nome');
         $data['ra'] = $this->session->userdata('ra');
@@ -129,6 +133,8 @@ class Aluno extends MY_Controller {
         $data['curso'] = $this->cursos_model->GetByPIN($curso_PIN);
         
         $data['medalhas'] = $this->usuario_has_medalha_model->getTodasMedalhas($data['ra'],$curso_PIN);
+
+        $data['trofeus'] = $this->usuario_has_trofeu_model->getTodosTrofeus($data['ra'],$curso_PIN);
 
         $data['header'] = "Minhas Conquistas - " . $data['curso']['Nome'];
 
