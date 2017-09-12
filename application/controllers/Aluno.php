@@ -447,6 +447,9 @@ class Aluno extends MY_Controller {
                     'Data_Conquista' => $data_conquista,
                 );
                 $status = $this->usuario_has_medalha_model->Inserir($dados_medalha);
+                if($status){
+                    $this->load->view('commons/modal_conquista');
+                }
             }
         }
 
