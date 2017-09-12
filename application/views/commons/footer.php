@@ -50,12 +50,19 @@
             function deletar(){
                 return confirm('Tem certeza?');
             }
+
             // Modal Image Gallery
-            function onClick(element) {
+            function onClick(element,descricao,data_conquista) {
               document.getElementById("img01").src = element.src;
               document.getElementById("modal01").style.display = "block";
+
               var captionText = document.getElementById("caption");
+              var desc = document.getElementById("descricao_modal");
+              var data = document.getElementById("data_modal");
+
               captionText.innerHTML = "Nome: " + element.alt;
+              desc.innerHTML = "Descrição: " + descricao;
+              data.innerHTML = "Data da conquista: " + data_conquista;
             }
         </script>
     </body>

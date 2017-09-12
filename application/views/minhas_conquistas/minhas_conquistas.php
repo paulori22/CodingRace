@@ -31,8 +31,9 @@
                     <?php if (isset($medalhas)): ?>
                         <?php foreach ($medalhas as $row): ?>
                             <div class="w3-third">
+                                <div id="descricao" style="display: none;"><?= $row['Descricao'] ?></div>
                                 <img src="<?php echo base_url() . $row['Imagem'] ?>"
-                                     style="width:100%" onclick="onClick(this)" alt="<?= $row['Nome'] ?>" title="<?= $row['Nome'] ?>">
+                                     style="width:100%" onclick="onClick(this,'<?= $row['Descricao'] ?>','<?= date('d/m/Y h:m:s', strtotime($row['Data_Conquista'])) ?>')" alt="<?= $row['Nome'] ?>" title="<?= $row['Nome'] ?>">
                             
                                 <div class="w3-center"><b><?= $row['Nome'] ?></b></div>
                             </div>
@@ -53,5 +54,7 @@
         <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
             <img id="img01" class="w3-image">
             <p id="caption"></p>
+            <p id="descricao_modal"></p>
+            <p id="data_modal"></p>
         </div>
     </div>
