@@ -387,6 +387,7 @@ class Aluno extends MY_Controller {
                 $this->session->set_flashdata('error', 'Histórico inserido com sucesso!');
 
                 $proximo_exercicio = $this->exercicio_model->GetProximoExercicio($idExercicio, $exercicio['Topico_idTopico']);
+
                 $this->verificaMedalhas($exercicio['Topico_idTopico']);
                 
                 if (is_null($proximo_exercicio)) {
@@ -422,8 +423,34 @@ class Aluno extends MY_Controller {
         $this->load->model('usuario_has_medalha_model');
         
         $ra = $this->session->userdata('ra');
+        $pin = $this->session->userdata('Curso_PIN');
 
-        if ($this->exercicio_model->acertouTodosOsExerciciosDoTopico($id_topico, $ra, $this->session->userdata('Curso_PIN'))) {
+        if($id_topico==3 || $id_topico==4){
+
+            if($this->exercicio_model->acertouPrimeiraQuestaoDoTopico($id_topico,$ra,$pin)){
+
+                switch ($id_topico) {
+                    case 3:
+                        $idMedalha = 3;
+                        break;
+                    case 4:
+                        $idMedalha = 4;
+                        break;
+                    default:
+                        break;
+                }
+                date_default_timezone_set('America/Sao_Paulo');
+                $data_conquista = date('Y/m/d H:i:s', time());
+                $dados_medalha = array(
+                    'Usuario_RA' => $ra,
+                    'idMedalha' => $idMedalha,
+                    'Data_Conquista' => $data_conquista,
+                );
+                $status = $this->usuario_has_medalha_model->Inserir($dados_medalha);
+            }
+        }
+
+        if ($this->exercicio_model->acertouTodosOsExerciciosDoTopico($id_topico, $ra, $pin)) {
 
             switch ($id_topico) {
                 case 1:
@@ -436,7 +463,7 @@ class Aluno extends MY_Controller {
                     $idMedalha = 9;
                     break;
                 case 4:
-                    $idMedalha = 4;
+                    $idMedalha = 5;
                     break;
                 case 5:
                     $idMedalha = 10;
@@ -454,6 +481,7 @@ class Aluno extends MY_Controller {
                     $idMedalha = NULL;
                     break;
             }
+
             date_default_timezone_set('America/Sao_Paulo');
             $data_conquista = date('Y/m/d H:i:s', time());
             $dados_medalha = array(
@@ -463,6 +491,10 @@ class Aluno extends MY_Controller {
             );
             $status = $this->usuario_has_medalha_model->Inserir($dados_medalha);
         }
+
+
+
+
     }
 
     public function Validar($operacao) {

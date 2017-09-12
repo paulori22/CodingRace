@@ -6,14 +6,17 @@
  * Date: 12/03/17
  * Time: 22:54
  */
-class Exercicio_model extends MY_Model {
+class Exercicio_model extends MY_Model
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
         $this->table = 'Exercicio';
     }
 
-    function GetById($id) {
+    function GetById($id)
+    {
         if (is_null($id))
             return false;
         $this->db->where('idExercicio', $id);
@@ -25,24 +28,13 @@ class Exercicio_model extends MY_Model {
         }
     }
 
-    function GetByTopico($idTopico) {
-        if (is_null($idTopico))
-            return false;
-        $this->db->where('Topico_idTopico', $idTopico);
-        $query = $this->db->get($this->table);
-        if ($query->num_rows() > 0) {
-            return $query->result_array();
-        } else {
-            return null;
-        }
-    }
-
-    function GetByTopicoMaisId($idTopico) {
+    function GetByTopicoMaisId($idTopico)
+    {
         if (is_null($idTopico))
             return false;
         $sql = "SELECT @n := @n + 1 n, Exercicio.idExercicio\n"
-                . "FROM `Exercicio`, (SELECT @n := 0) m\n"
-                . "WHERE `Topico_idTopico`=$idTopico";
+            . "FROM `Exercicio`, (SELECT @n := 0) m\n"
+            . "WHERE `Topico_idTopico`=$idTopico";
         $query = $this->db->query($sql);
 
         if ($query->num_rows() > 0) {
@@ -52,23 +44,25 @@ class Exercicio_model extends MY_Model {
         }
     }
 
-    function GetListaExerciciosAlunoTopico($idTopico, $ra, $pin) {
+    function GetListaExerciciosAlunoTopico($idTopico, $ra, $pin)
+    {
         if (is_null($idTopico) || is_null($ra))
             return false;
 
         if (!function_exists('sortByIdExercicio')) {
 
-            function sortByIdExercicio($a, $b) {
+            function sortByIdExercicio($a, $b)
+            {
                 return $a['idExercicio'] - $b['idExercicio'];
             }
 
         }
 
         $sql = "SELECT Exercicio.idExercicio, SUM(Usuario_has_Resposta.Resposta_Correta) AS Resposta_Correta, COUNT(Usuario_has_Resposta.Usuario_RA) AS Tentativas\n"
-                . "FROM Exercicio\n"
-                . "LEFT JOIN Usuario_has_Resposta ON Exercicio.idExercicio=Usuario_has_Resposta.Exercicio_idExercicio\n"
-                . "WHERE Exercicio.Topico_idTopico=$idTopico AND Usuario_has_Resposta.Usuario_RA=$ra AND Usuario_has_Resposta.Curso_PIN=$pin \n"
-                . "GROUP BY Exercicio.idExercicio";
+            . "FROM Exercicio\n"
+            . "LEFT JOIN Usuario_has_Resposta ON Exercicio.idExercicio=Usuario_has_Resposta.Exercicio_idExercicio\n"
+            . "WHERE Exercicio.Topico_idTopico=$idTopico AND Usuario_has_Resposta.Usuario_RA=$ra AND Usuario_has_Resposta.Curso_PIN=$pin \n"
+            . "GROUP BY Exercicio.idExercicio";
 
         $query = $this->db->query($sql);
 
@@ -103,25 +97,66 @@ class Exercicio_model extends MY_Model {
         }
     }
 
-    function acertouTodosOsExerciciosDoTopico($id_topico,$ra, $pin) {
+    function GetByTopico($idTopico)
+    {
+        if (is_null($idTopico))
+            return false;
+        $this->db->where('Topico_idTopico', $idTopico);
+        $query = $this->db->get($this->table);
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
+
+    function acertouTodosOsExerciciosDoTopico($id_topico, $ra, $pin)
+    {
 
         $sql = "SELECT Exercicio.idExercicio, SUM(Usuario_has_Resposta.Resposta_Correta) AS Resposta_Correta, COUNT(Usuario_has_Resposta.Usuario_RA) AS Tentativas\n"
-                . "FROM Exercicio\n"
-                . "LEFT JOIN Usuario_has_Resposta ON Exercicio.idExercicio=Usuario_has_Resposta.Exercicio_idExercicio\n"
-                . "WHERE Exercicio.Topico_idTopico=$id_topico AND Usuario_has_Resposta.Usuario_RA=$ra AND Resposta_Correta = 1 AND Usuario_has_Resposta.Curso_PIN=$pin \n"
-                . "GROUP BY Exercicio.idExercicio";
-        
+            . "FROM Exercicio\n"
+            . "LEFT JOIN Usuario_has_Resposta ON Exercicio.idExercicio=Usuario_has_Resposta.Exercicio_idExercicio\n"
+            . "WHERE Exercicio.Topico_idTopico=$id_topico AND Usuario_has_Resposta.Usuario_RA=$ra AND Resposta_Correta = 1 AND Usuario_has_Resposta.Curso_PIN=$pin \n"
+            . "GROUP BY Exercicio.idExercicio";
+
         $query = $this->db->query($sql);
         $numero_exercicio_topico = $this->getTotalNumberOfExercicesOfTopic($id_topico);
-        
-        if($query->num_rows() == $numero_exercicio_topico)
+
+        if ($query->num_rows() == $numero_exercicio_topico)
             return true;
         else
             return false;
- 
+
     }
 
-    function GetProximoExercicio($idExercicio, $idTopico) {
+    function getTotalNumberOfExercicesOfTopic($idTopico)
+    {
+        if (is_null($idTopico))
+            return false;
+        $this->db->where('Topico_idTopico', $idTopico);
+        $query = $this->db->get($this->table);
+        return $query->num_rows();
+    }
+
+    function acertouPrimeiraQuestaoDoTopico($id_topico, $ra, $pin)
+    {
+        $sql = "SELECT Exercicio.idExercicio, SUM(Usuario_has_Resposta.Resposta_Correta) AS Resposta_Correta, COUNT(Usuario_has_Resposta.Usuario_RA) AS Tentativas\n"
+            . "FROM Exercicio\n"
+            . "LEFT JOIN Usuario_has_Resposta ON Exercicio.idExercicio=Usuario_has_Resposta.Exercicio_idExercicio\n"
+            . "WHERE Exercicio.Topico_idTopico=$id_topico AND Usuario_has_Resposta.Usuario_RA=$ra AND Resposta_Correta = 1 AND Usuario_has_Resposta.Curso_PIN=$pin \n"
+            . "GROUP BY Exercicio.idExercicio";
+
+        $query = $this->db->query($sql);
+        if ($query->num_rows() == 1)
+            return true;
+        else
+            return false;
+
+
+    }
+
+    function GetProximoExercicio($idExercicio, $idTopico)
+    {
         if (is_null($idExercicio) || is_null($idTopico))
             return false;
         $this->db->where('Topico_idTopico', $idTopico);
@@ -137,7 +172,8 @@ class Exercicio_model extends MY_Model {
         }
     }
 
-    function GetByTopicoOrderByBloom($idTopico, $sort = 'Categoria_Bloom', $order = 'asc') {
+    function GetByTopicoOrderByBloom($idTopico, $sort = 'Categoria_Bloom', $order = 'asc')
+    {
         if (is_null($idTopico))
             return false;
         $this->db->where('Topico_idTopico', $idTopico);
@@ -150,29 +186,24 @@ class Exercicio_model extends MY_Model {
         }
     }
 
-    function getTotalNumberOfExercicesOfTopic($idTopico) {
-        if (is_null($idTopico))
-            return false;
-        $this->db->where('Topico_idTopico', $idTopico);
-        $query = $this->db->get($this->table);
-        return $query->num_rows();
-    }
-
-    function AtualizaExercicio($id, $data) {
+    function AtualizaExercicio($id, $data)
+    {
         if (is_null($id) || !isset($data))
             return false;
         $this->db->where('idExercicio', $id);
         return $this->db->update($this->table, $data);
     }
 
-    function ExcluirExercicio($idExercicio) {
+    function ExcluirExercicio($idExercicio)
+    {
         if (is_null($idExercicio))
             return false;
         $this->db->where('idExercicio', $idExercicio);
         return $this->db->delete($this->table);
     }
 
-    function InserirRetornandoId($data) {
+    function InserirRetornandoId($data)
+    {
         if (!isset($data))
             return false;
         $this->db->insert($this->table, $data);
