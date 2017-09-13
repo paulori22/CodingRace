@@ -18,10 +18,14 @@ class Aluno extends MY_Controller {
     }
 
     public function HomeAluno() {
+        $this->load->model('usuario_has_medalha_model');
+
         $data['nome'] = $this->session->userdata('nome');
         $data['ra'] = $this->session->userdata('ra');
         $data['title'] = "Projeto TFG - Home";
         $data['header'] = "Home";
+
+        $data['conquista'] = $this->usuario_has_medalha_model->getConquistasMaisRecentes($data['ra']);
 
         $this->load->view('commons/header', $data);
         $this->load->view('homealuno_view');

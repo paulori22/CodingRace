@@ -28,4 +28,20 @@ class Usuario_has_medalha_model extends MY_Model {
         }
     }
 
+    public function getConquistasMaisRecentes($ra)
+    {
+        $this->db->join('Medalha','Medalha.idMedalha = Usuario_has_Medalha.idMedalha');
+        $this->db->where('Usuario_RA',$ra);
+        $this->db->order_by('Data_Conquista','DESC');
+        $this->db->limit(5);
+
+        $query = $this->db->get($this->table);
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return false;
+        }
+    }
+
 }
