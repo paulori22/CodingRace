@@ -64,6 +64,7 @@
               desc.innerHTML = "Descrição: " + descricao;
               data.innerHTML = "Data da conquista: " + data_conquista;
             }
+
         </script>
     </body>
 </html>

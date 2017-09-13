@@ -110,6 +110,21 @@ class Exercicio_model extends MY_Model
         }
     }
 
+    function getPontosExercicio($idExercicio)
+    {
+        if(is_null($idExercicio))
+            return false;
+        $this->db->select('Pontos');
+        $this->db->where('idExercicio',$idExercicio);
+        $query = $this->db->get($this->table);
+        if ($query->num_rows() > 0) {
+            return $query->row()->Pontos;
+        } else {
+            return null;
+        }
+
+    }
+
     function acertouTodosOsExerciciosDoTopico($id_topico, $ra, $pin)
     {
 

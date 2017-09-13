@@ -353,6 +353,7 @@ class Aluno extends MY_Controller {
         $this->load->model('usuario_has_resposta_model');
         $this->load->model('usuario_has_curso_model');
         $this->load->model('curso_has_topico_model');
+        $this->load->model('medalha_model');
 
         $opcao = $this->input->post('opcao');
 
@@ -366,7 +367,7 @@ class Aluno extends MY_Controller {
         $data_exercicio = date('Y/m/d H:i:s', time());
 
         if ($opcao == $alternativa['Alternativa']) {
-            echo "<script> window.alert('Resposta Correta!!')</script>";
+
             $dados_resposta = array(
                 'Usuario_RA' => $ra,
                 'Curso_PIN' => $curso_pin,
@@ -382,13 +383,17 @@ class Aluno extends MY_Controller {
                 $this->session->set_flashdata('error', 'Não foi possível inserir o histórico!');
                 self::ExerciciosTopico($exercicio['Topico_idTopico']);
             } else {
-                $tentativas = $this->usuario_has_resposta_model->GetTentativasExercicios($idExercicio, $ra);
-                $this->usuario_has_curso_model->AdicionarPontosCursoAluno($exercicio['Pontos'], $ra, $curso_pin, $tentativas);
+
+                $tentativas = $this->usuario_has_resposta_model->GetTentativasExercicios($idExercicio, $ra, $curso_pin);
+                $data['pontos'] = $this->usuario_has_curso_model->AdicionarPontosCursoAluno($exercicio['Pontos'], $ra, $curso_pin, $tentativas);
+
+                $this->load->view('commons/modal_acertou_exercicio',$data);
+
                 $this->session->set_flashdata('error', 'Histórico inserido com sucesso!');
 
-                $proximo_exercicio = $this->exercicio_model->GetProximoExercicio($idExercicio, $exercicio['Topico_idTopico']);
-
                 $this->verificaMedalhas($exercicio['Topico_idTopico']);
+
+                $proximo_exercicio = $this->exercicio_model->GetProximoExercicio($idExercicio, $exercicio['Topico_idTopico']);
                 
                 if (is_null($proximo_exercicio)) {
                     self::Topicos_Cursos($curso_pin);
@@ -396,8 +401,7 @@ class Aluno extends MY_Controller {
                     self::RealizaExercicio($proximo_exercicio);
                 }
             }
-        } else {
-            echo "<script> window.alert('Resposta Incorreta!!')</script>";
+        } elseif(!is_null($opcao)) {
 
             $dados_resposta = array(
                 'Usuario_RA' => $ra,
@@ -412,9 +416,28 @@ class Aluno extends MY_Controller {
                 $this->session->set_flashdata('error', 'Não foi possível inserir o histórico!');
                 self::RealizaExercicio($idExercicio);
             } else {
+
+                $data['tentativas'] = $this->usuario_has_resposta_model->GetTentativasExercicios($idExercicio, $ra, $curso_pin);
+                $this->load->view('commons/modal_errou_exercicio',$data);
+
                 $this->session->set_flashdata('error', 'Histórico inserido com sucesso!');
-                self::RealizaExercicio($idExercicio);
+                if($data['tentativas'] < 3)
+                    self::RealizaExercicio($idExercicio);
+                else{
+                    $proximo_exercicio = $this->exercicio_model->GetProximoExercicio($idExercicio, $exercicio['Topico_idTopico']);
+
+                    if (is_null($proximo_exercicio)) {
+                        self::Topicos_Cursos($curso_pin);
+                    } else {
+                        self::RealizaExercicio($proximo_exercicio);
+                    }
+
+                }
+
             }
+        }else{
+
+            self::Topicos_Cursos($curso_pin);
         }
     }
 
@@ -448,7 +471,8 @@ class Aluno extends MY_Controller {
                 );
                 $status = $this->usuario_has_medalha_model->Inserir($dados_medalha);
                 if($status){
-                    $this->load->view('commons/modal_conquista');
+                    $data['conquista'] = $this->medalha_model->getMedalhaID($idMedalha);
+                    $this->load->view('commons/modal_conquista',$data);
                 }
             }
         }
@@ -493,10 +517,11 @@ class Aluno extends MY_Controller {
                 'Data_Conquista' => $data_conquista,
             );
             $status = $this->usuario_has_medalha_model->Inserir($dados_medalha);
+            if($status){
+                $data['conquista'] = $this->medalha_model->getMedalhaID($idMedalha);
+                $this->load->view('commons/modal_conquista',$data);
+            }
         }
-
-
-
 
     }
 

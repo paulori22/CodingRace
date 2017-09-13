@@ -46,5 +46,9 @@
               text-align: center;
 
             }
+            .w3-modal{
+                z-index: 10;
+            }
+
         </style>
     </head>

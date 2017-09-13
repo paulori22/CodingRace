@@ -109,12 +109,19 @@ class Usuario_has_curso_model extends MY_Model
     {
         if(is_null($pontos)  || is_null($ra) || is_null($pin))
             return false;
+
         if($tentativas==1){
             $this->db->set('Pontuacao','Pontuacao + '.$pontos,FALSE);
+            $pontos_ganhos = $pontos;
+
         }elseif($tentativas==2){
-            $this->db->set('Pontuacao','Pontuacao + '.((int)($pontos*(80/100))),FALSE);
+            $pontos_ganhos = (int)($pontos*(80/100));
+            $this->db->set('Pontuacao','Pontuacao + '.$pontos_ganhos,FALSE);
+
         }else{
-            $this->db->set('Pontuacao','Pontuacao + '.((int)($pontos*(60/100))),FALSE);
+            $pontos_ganhos = (int)($pontos*(60/100));
+            $this->db->set('Pontuacao','Pontuacao + '.$pontos_ganhos,FALSE);
+
         }
         
         $this->db->where('Usuario_RA',$ra);
@@ -122,8 +129,9 @@ class Usuario_has_curso_model extends MY_Model
         
         
         $query = $this->db->update($this->table);
+
         if ($query) {
-            return true;
+            return $pontos_ganhos;
         } else {
             return null;
         }
