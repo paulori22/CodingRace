@@ -67,14 +67,14 @@ class Usuario_has_curso_model extends MY_Model
     public function UsuariosCursoLeaderboard($pin){
         if(is_null($pin))
             return false;
-        $sql = "SELECT Usuario.Nome,Usuario_has_Curso.Pontuacao\n"
 
+        $sql = "SELECT Usuario.Nome, Usuario_has_Curso.Pontuacao, COUNT(Usuario_has_Medalha.idUsuario_has_medalha) as Qtd_Medalha, COUNT(Usuario_has_Trofeu.idUsuario_has_Trofeu) as Qtd_Trofeu\n"
             . "FROM Usuario_has_Curso\n"
-
             . "JOIN Usuario ON Usuario_has_Curso.Usuario_RA=Usuario.RA\n"
-
-            . "WHERE Usuario_has_Curso.Curso_PIN = $pin\n"
-
+            . "LEFT JOIN Usuario_has_Medalha ON Usuario_has_Medalha.Usuario_RA = Usuario_has_Curso.Usuario_RA\n"
+            . "LEFT JOIN Usuario_has_Trofeu ON Usuario_has_Trofeu.Usuario_RA = Usuario_has_Curso.Usuario_RA\n"
+            . "WHERE Usuario_has_Curso.Curso_PIN = $pin AND Usuario.Tipo_Usuario=2\n"
+            . "GROUP BY Usuario.RA\n"
             . "ORDER BY Usuario_has_Curso.Pontuacao DESC";
         
         $query = $this->db->query($sql);
