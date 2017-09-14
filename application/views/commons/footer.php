@@ -1,7 +1,7 @@
             <!-- Footer -->
             <footer class="w3-container w3-padding-16 w3-light-grey">
                 <h4>CodingRace</h4>
-                <p>Desenvolvido por <a href="#">Paulo e João</a></p>
+                <p>Desenvolvido por <a href="https://www.linkedin.com/in/paulo-ricardo-boneti-pinto-de-andrade-47827514a/" target="_blank">Paulo</a> e <a href="https://www.linkedin.com/in/jo%C3%A3o-gabriel-silveira-avila-678292138/" target="_blank">João</a></p>
             </footer>
 
         <!-- End page content -->
