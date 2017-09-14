@@ -8,7 +8,7 @@
 <nav class="w3-sidenav w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidenav"><br>
     <div class="w3-container w3-row w3-center">
         <div class="w3-col s8">
-            <span>Welcome, <strong><?php echo $nome?></strong></span><br>
+            <span>Bem-vindo, <strong><?php echo $nome?></strong></span><br>
             <?php if ($this->router->fetch_class() == 'Admin'): ?>
                 <a href="<?=base_url('editarusuario_admin')."/".$ra?>" class="w3-hover-none w3-hover-text-green w3-show-inline-block"><i class="fa fa-user"></i></a>
             <?php elseif ($this->router->fetch_class() == 'Professor'): ?>
@@ -45,9 +45,9 @@
     <?php elseif ($this->router->fetch_class() == 'Aluno'): ?>
         <a href="#" class="w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
         <a href="<?=base_url('home_aluno')?>" class="<?=($this->router->fetch_method() == 'HomeAluno') ? 'w3-padding w3-blue' : null; ?>"><i class="fa fa-home fa-fw"></i>  Home</a>
-        <a href="<?=base_url('cursos_aluno')?>" class="<?=($this->router->fetch_method() == 'Cursos') ? 'w3-padding w3-blue' : null; ?>"><i class="fa fa-book fa-fw"></i>  Cursos</a>
-        <a href="<?=base_url('minhas_conquistas')?>" class="w3-padding"><i class="fa fa-trophy"></i>  Minhas Conquistas</a>
-        <a href="<?=base_url('leaderboard')?>" class="w3-padding"><i class="fa fa-bar-chart"></i>  Leaderboard</a>
+        <a href="<?=base_url('cursos_aluno')?>" class="<?=($this->router->fetch_method() == 'CursosUsuario' || $this->router->fetch_method() == 'Topicos_Cursos' || $this->router->fetch_method() == 'RealizaExercicio' || $this->router->fetch_method() == 'ConfereExercicio') ? 'w3-padding w3-blue' : null; ?>"><i class="fa fa-book fa-fw"></i>  Cursos</a>
+        <a href="<?=base_url('minhas_conquistas')?>" class="<?=($this->router->fetch_method() == 'Minhas_Conquistas' || $this->router->fetch_method() == 'Minhas_ConquistasCurso') ? 'w3-padding w3-blue' : null; ?>"><i class="fa fa-trophy"></i>  Minhas Conquistas</a>
+        <a href="<?=base_url('leaderboard')?>" class="<?=($this->router->fetch_method() == 'Leaderboard' || $this->router->fetch_method() == 'LeaderboardCurso') ? 'w3-padding w3-blue' : null; ?>"><i class="fa fa-bar-chart"></i>  Leaderboard</a>
         <a href="<?=base_url('logout')?>" class="w3-padding"><i class="fa fa-remove fa-fw"></i>  Sair</a><br><br>    
     <?php endif; ?>
 </nav>

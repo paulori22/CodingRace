@@ -18,11 +18,22 @@
                 <?php foreach ($conquista as $row): ?>
                     <div class="w3-col" style="text-align: center; width:20%">
                         <img src="<?php echo base_url() . $row['Imagem'] ?>"
-                             style="width:60%" alt="<?= $row['Nome'] ?>" title="<?= $row['Nome'] ?>">
+                             style="width:60%" onclick="onClick(this,'<?= $row['Descricao'] ?>','<?= date('d/m/Y h:m:s', strtotime($row['Data_Conquista'])) ?>')" title="<?= $row['Nome'] ?>">
 
                         <div><?= $row['Nome'] ?></div>
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
         <?php endif; ?>
+    </div>
+
+    <!-- Modal for full size images on click-->
+    <div id="modal01" class="w3-modal" style="padding-top:0" onclick="this.style.display = 'none'">
+        <span class="w3-button w3-black w3-xlarge w3-display-topright">×</span>
+        <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+            <img id="img01" class="w3-image">
+            <p id="caption"></p>
+            <p id="descricao_modal"></p>
+            <p id="data_modal"></p>
+        </div>
     </div>

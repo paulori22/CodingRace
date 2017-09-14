@@ -13,6 +13,9 @@
             table{font-family: "Times New Roman", Times, serif;}
             .w3-third img{margin-bottom: -6px; opacity: 0.8; cursor: pointer}
             .w3-third img:hover{opacity: 1}
+
+            .w3-col img{margin-bottom: -6px; opacity: 0.8; cursor: pointer}
+            .w3-col img:hover{opacity: 1}
             
             .circle {
               position: relative;
