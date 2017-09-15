@@ -44,4 +44,23 @@ class Usuario_has_medalha_model extends MY_Model {
         }
     }
 
+    public function getTotalMedalhas($ra){
+
+        if(is_null($ra))
+            return false;
+
+        $this->db->select('COUNT(idUsuario_has_medalha) AS TotalMedalhas');
+        $this->db->where('Usuario_RA',$ra);
+
+
+        $query = $this->db->get($this->table);
+
+        if ($query->num_rows() > 0) {
+            return $query->row()->TotalMedalhas;
+        } else {
+            return null;
+        }
+
+    }
+
 }

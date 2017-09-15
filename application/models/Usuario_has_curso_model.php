@@ -136,4 +136,21 @@ class Usuario_has_curso_model extends MY_Model
             return null;
         }
     }
+
+    public function getTotalPontosObtidos($ra){
+
+        if(is_null($ra))
+            return false;
+
+        $this->db->select('SUM(Pontuacao) as TotalPontuacao');
+        $this->db->where('Usuario_RA',$ra);
+
+        $query = $this->db->get($this->table);
+
+        if ($query->num_rows() > 0) {
+            return $query->row()->TotalPontuacao;
+        } else {
+            return null;
+        }
+    }
 }

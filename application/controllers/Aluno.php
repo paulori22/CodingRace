@@ -19,6 +19,10 @@ class Aluno extends MY_Controller {
 
     public function HomeAluno() {
         $this->load->model('usuario_has_medalha_model');
+        $this->load->model('usuario_has_resposta_model');
+        $this->load->model('usuario_has_curso_model');
+        $this->load->model('usuario_has_medalha_model');
+        $this->load->model('usuario_has_trofeu_model');
 
         $data['nome'] = $this->session->userdata('nome');
         $data['ra'] = $this->session->userdata('ra');
@@ -26,6 +30,18 @@ class Aluno extends MY_Controller {
         $data['header'] = "Home";
 
         $data['conquista'] = $this->usuario_has_medalha_model->getConquistasMaisRecentes($data['ra']);
+
+        $informacoes_estatistica = array(
+            "exercicios_realizados" => $this->usuario_has_resposta_model->getTotalExerciciosRealizado($data['ra']),
+            "exercicios_acertados" => $this->usuario_has_resposta_model->getTotalAcertos($data['ra']),
+            "exercicios_acertados_primeira" => $this->usuario_has_resposta_model->getTotalAcertosDePrimeira($data['ra']),
+            "exercicios_errados" => $this->usuario_has_resposta_model->getTotalErrados($data['ra']),
+            "pontos" => $this->usuario_has_curso_model->getTotalPontosObtidos($data['ra']),
+            "trofeus" =>$this->usuario_has_medalha_model->getTotalMedalhas($data['ra']),
+            "medalhas" =>$this->usuario_has_trofeu_model->getTotalTrofeus($data['ra']),
+        );
+
+        $data['estatistica'] = $informacoes_estatistica;
 
         $this->load->view('commons/header', $data);
         $this->load->view('homealuno_view');

@@ -128,7 +128,7 @@ class Exercicio_model extends MY_Model
     function acertouTodosOsExerciciosDoTopico($id_topico, $ra, $pin)
     {
 
-        $sql = "SELECT Exercicio.idExercicio, SUM(Usuario_has_Resposta.Resposta_Correta) AS Resposta_Correta, COUNT(Usuario_has_Resposta.Usuario_RA) AS Tentativas\n"
+        $sql = "SELECT Exercicio.idExercicio, SUM(Usuario_has_Resposta.Resposta_Correta) AS Resposta_Correta\n"
             . "FROM Exercicio\n"
             . "LEFT JOIN Usuario_has_Resposta ON Exercicio.idExercicio=Usuario_has_Resposta.Exercicio_idExercicio\n"
             . "WHERE Exercicio.Topico_idTopico=$id_topico AND Usuario_has_Resposta.Usuario_RA=$ra AND Resposta_Correta = 1 AND Usuario_has_Resposta.Curso_PIN=$pin \n"
