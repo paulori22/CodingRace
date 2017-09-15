@@ -64,9 +64,9 @@
                                     <td><?=$row['Categoria_Bloom']?></td>
                                     <td><?=$row['Tipo_Exercicio']?></td>
                                     <?php if ($this->router->fetch_class() == 'Professor'): ?>
-                                        <td><a href="<?=base_url('editarexercicio_professor')."/".$row['idExercicio']?>" style="text-decoration: none"><i class="w3-xlarge fa fa-edit">&nbsp;</i></a><a href="<?=base_url('excluirexercicio_professor')."/".$topico['idTopico']."/".$row['idExercicio']?>"><i class="w3-xlarge fa fa-trash"></i></a></td>
+                                        <td><a href="<?=base_url('editarexercicio_professor')."/".$row['idExercicio']?>" style="text-decoration: none"><i class="w3-xlarge fa fa-edit">&nbsp;</i></a><a href="<?=base_url('excluirexercicio_professor')."/".$topico['idTopico']."/".$row['idExercicio']?>" onclick="return deletar();"><i class="w3-xlarge fa fa-trash"></i></a></td>
                                     <?php else: ?>
-                                        <td><a href="<?=base_url('editarexercicio_admin')."/".$row['idExercicio']?>" style="text-decoration: none"><i class="w3-xlarge fa fa-edit">&nbsp;</i></a><a href="<?=base_url('excluirexercicio_admin')."/".$topico['idTopico']."/".$row['idExercicio']?>"><i class="w3-xlarge fa fa-trash"></i></a></td
+                                        <td><a href="<?=base_url('editarexercicio_admin')."/".$row['idExercicio']?>" style="text-decoration: none"><i class="w3-xlarge fa fa-edit">&nbsp;</i></a><a href="<?=base_url('excluirexercicio_admin')."/".$topico['idTopico']."/".$row['idExercicio']?>" onclick="return deletar();"><i class="w3-xlarge fa fa-trash"></i></a></td
                                     <?php endif; ?>
                                     </tr>
                             <?php endforeach;?>

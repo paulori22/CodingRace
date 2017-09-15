@@ -48,7 +48,7 @@
             }
 
             function deletar(){
-                return confirm('Tem certeza?');
+                return confirm('Você tem certeza que deletar?');
             }
 
             // Modal Image Gallery

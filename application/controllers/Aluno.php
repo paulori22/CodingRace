@@ -264,7 +264,7 @@ class Aluno extends MY_Controller {
         } else {
             $data[''] = $this->usuario_has_curso_model->ExcluirCursoCadastrado($pin, $ra);
             $this->session->set_flashdata('success', 'Curso excluído com sucesso.');
-            redirect('cursoscadastrados_aluno');
+            redirect('cursos_aluno');
         }
     }
 

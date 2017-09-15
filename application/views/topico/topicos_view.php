@@ -25,7 +25,7 @@
                         <td><?=$row['idTopico']?></td>
                         <td><?=$row['Nome']?></td>
                         <?php if ($this->router->fetch_class() == 'Admin'): ?>
-                            <td><a href="<?=base_url('editartopico_admin')."/".$row['idTopico']?>" style="text-decoration: none"><i class="w3-xlarge fa fa-edit">&nbsp;</i></a><a href="<?=base_url('excluirtopico_admin')."/".$row['idTopico']?>"><i class="w3-xlarge fa fa-trash"></i></a></td>
+                            <td><a href="<?=base_url('editartopico_admin')."/".$row['idTopico']?>" style="text-decoration: none"><i class="w3-xlarge fa fa-edit">&nbsp;</i></a><a href="<?=base_url('excluirtopico_admin')."/".$row['idTopico']?>" onclick="return deletar();"><i class="w3-xlarge fa fa-trash"></i></a></td>
                         <?php elseif ($this->router->fetch_class() == 'Professor'): ?>
                             <td><a href="<?=base_url('editartopico_professor')."/".$row['idTopico']?>" style="text-decoration: none"><i class="w3-xlarge fa fa-edit">&nbsp;</i></a></td>
                         <?php endif; ?>

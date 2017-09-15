@@ -9,7 +9,7 @@
 
     <!-- Medalhas grid -->
     <div class="w3-row-padding w3-margin-top">
-        <h3>Últimas conquistas:</h3>
+        <h5><i class="fa fa-trophy"></i> Últimas conquistas:</h5>
 
         <?php if ($conquista == FALSE): ?>
             <h3>Você ainda não tem conquistas</h3>
@@ -26,6 +26,11 @@
             <?php endif; ?>
         <?php endif; ?>
     </div>
+
+    <!-- Estatísticas -->
+    <div class="w3-row-padding w3-margin-top">
+        <h5><i class="fa fa-line-chart"></i> Estatísticas:</h5>
+
 
     <!-- Modal for full size images on click-->
     <div id="modal01" class="w3-modal" style="padding-top:0" onclick="this.style.display = 'none'">
