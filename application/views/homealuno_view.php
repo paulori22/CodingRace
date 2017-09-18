@@ -55,7 +55,7 @@
                     <td><?= $estatistica['exercicios_acertados'] ?></td>
                 </tr>
                 <tr>
-                    <td>Toral de Exercícios acertados de primeira</td>
+                    <td>Total de Exercícios acertados de primeira</td>
                     <td><?= $estatistica['exercicios_acertados_primeira']?></td>
                 </tr>
                 <tr>

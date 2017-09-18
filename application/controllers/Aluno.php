@@ -37,8 +37,8 @@ class Aluno extends MY_Controller {
             "exercicios_acertados_primeira" => $this->usuario_has_resposta_model->getTotalAcertosDePrimeira($data['ra']),
             "exercicios_errados" => $this->usuario_has_resposta_model->getTotalErrados($data['ra']),
             "pontos" => $this->usuario_has_curso_model->getTotalPontosObtidos($data['ra']),
-            "trofeus" =>$this->usuario_has_medalha_model->getTotalMedalhas($data['ra']),
-            "medalhas" =>$this->usuario_has_trofeu_model->getTotalTrofeus($data['ra']),
+            "medalhas" =>$this->usuario_has_medalha_model->getTotalMedalhas($data['ra']),
+            "trofeus" =>$this->usuario_has_trofeu_model->getTotalTrofeus($data['ra']),
         );
 
         $data['estatistica'] = $informacoes_estatistica;
@@ -383,7 +383,7 @@ class Aluno extends MY_Controller {
 
         $ra = $this->session->userdata('ra');
         $curso_pin = $this->session->userdata('Curso_PIN');
-        date_default_timezone_set('America/Sao_Paulo');
+        //date_default_timezone_set('America/Sao_Paulo');
         $data_exercicio = date('Y/m/d H:i:s', time());
 
         if ($opcao == $alternativa['Alternativa']) {
@@ -412,6 +412,8 @@ class Aluno extends MY_Controller {
                 $this->session->set_flashdata('error', 'Histórico inserido com sucesso!');
 
                 $this->verificaMedalhas($exercicio['Topico_idTopico']);
+
+                $this->verificaTrofeu($ra);
 
                 $proximo_exercicio = $this->exercicio_model->GetProximoExercicio($idExercicio, $exercicio['Topico_idTopico']);
                 
@@ -482,7 +484,7 @@ class Aluno extends MY_Controller {
                     default:
                         break;
                 }
-                date_default_timezone_set('America/Sao_Paulo');
+                //date_default_timezone_set('America/Sao_Paulo');
                 $data_conquista = date('Y/m/d H:i:s', time());
                 $dados_medalha = array(
                     'Usuario_RA' => $ra,
@@ -491,6 +493,8 @@ class Aluno extends MY_Controller {
                 );
                 $status = $this->usuario_has_medalha_model->Inserir($dados_medalha);
                 if($status){
+
+                    $data['id_modal'] = 9;
                     $data['conquista'] = $this->medalha_model->getMedalhaID($idMedalha);
                     $this->load->view('commons/modal_conquista',$data);
                 }
@@ -529,7 +533,7 @@ class Aluno extends MY_Controller {
                     break;
             }
 
-            date_default_timezone_set('America/Sao_Paulo');
+            //date_default_timezone_set('America/Sao_Paulo');
             $data_conquista = date('Y/m/d H:i:s', time());
             $dados_medalha = array(
                 'Usuario_RA' => $ra,
@@ -538,10 +542,52 @@ class Aluno extends MY_Controller {
             );
             $status = $this->usuario_has_medalha_model->Inserir($dados_medalha);
             if($status){
+
+                $data['id_modal'] = 8;
                 $data['conquista'] = $this->medalha_model->getMedalhaID($idMedalha);
                 $this->load->view('commons/modal_conquista',$data);
             }
         }
+
+
+
+    }
+
+    public function verificaTrofeu($ra){
+
+        $this->load->model('trofeu_model');
+        $this->load->model('usuario_has_medalha_model');
+        $this->load->model('usuario_has_trofeu_model');
+
+
+        if($this->usuario_has_medalha_model->ganhouTrofeuByteQueEuGosto($ra)){
+
+            $idTrofeu = 3;
+
+            //date_default_timezone_set('America/Sao_Paulo');
+            $data_conquista = date('Y/m/d H:i:s', time());
+            $dados_trofeu = array(
+                'Usuario_RA' => $ra,
+                'idTrofeu' => $idTrofeu,
+                'Data_Conquista' => $data_conquista,
+            );
+
+            $status = $this->usuario_has_trofeu_model->Inserir($dados_trofeu);
+
+            if($status){
+
+                $data['id_modal'] = 10;
+                $data['conquista'] = $this->trofeu_model->getTrofeuByID($idTrofeu);
+
+                $this->load->view('commons/modal_conquista',$data);
+            }
+
+        }
+
+
+
+
+
 
     }
 

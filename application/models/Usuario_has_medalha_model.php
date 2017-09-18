@@ -63,4 +63,26 @@ class Usuario_has_medalha_model extends MY_Model {
 
     }
 
+    public function ganhouTrofeuByteQueEuGosto($ra){
+
+        if(is_null($ra))
+            return false;
+
+        $sql = "SELECT idMedalha\n"
+
+            . "FROM `Usuario_has_Medalha`\n"
+
+            . "WHERE Usuario_RA=$ra AND (idMedalha = 1 OR idMedalha = 2 OR idMedalha = 5 OR idMedalha = 6 OR idMedalha = 7 OR idMedalha = 8 OR idMedalha = 9 OR idMedalha = 10)";
+
+        $query = $this->db->query($sql);
+
+        if ($query->num_rows() == 8) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
 }
