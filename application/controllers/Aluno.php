@@ -37,8 +37,8 @@ class Aluno extends MY_Controller {
             "exercicios_acertados_primeira" => $this->usuario_has_resposta_model->getTotalAcertosDePrimeira($data['ra']),
             "exercicios_errados" => $this->usuario_has_resposta_model->getTotalErrados($data['ra']),
             "pontos" => $this->usuario_has_curso_model->getTotalPontosObtidos($data['ra']),
-            "trofeus" =>$this->usuario_has_medalha_model->getTotalMedalhas($data['ra']),
-            "medalhas" =>$this->usuario_has_trofeu_model->getTotalTrofeus($data['ra']),
+            "medalhas" =>$this->usuario_has_medalha_model->getTotalMedalhas($data['ra']),
+            "trofeus" =>$this->usuario_has_trofeu_model->getTotalTrofeus($data['ra']),
         );
 
         $data['estatistica'] = $informacoes_estatistica;
