@@ -18,7 +18,7 @@
                     <?php foreach ($trofeus as $row): ?>
                         <div class="w3-third" style="text-align: center">
                             <img src="<?php echo base_url() . $row['Imagem'] ?>"
-                                 style="width:60%" onclick="onClick(this,'<?= $row['Descricao'] ?>','<?= date('d/m/Y h:m:s', strtotime($row['Data_Conquista'])) ?>')" alt="<?= $row['Nome'] ?>" title="<?= $row['Nome'] ?>">
+                                 style="width:60%" onclick="onClick(this,'<?= $row['Descricao'] ?>','<?= DateTime::createFromFormat ( "Y-m-d H:i:s", $row["Data_Conquista"] )->format('d/m/Y H:i:s') ?>')" alt="<?= $row['Nome'] ?>" title="<?= $row['Nome'] ?>">
 
                             <div ><b><?= $row['Nome'] ?></b></div>
                         </div>
@@ -41,7 +41,7 @@
                         <?php foreach ($medalhas as $row): ?>
                             <div class="w3-third" style="text-align: center">
                                 <img src="<?php echo base_url() . $row['Imagem'] ?>"
-                                     style="width:60%" onclick="onClick(this,'<?= $row['Descricao'] ?>','<?= date('d/m/Y h:m:s', strtotime($row['Data_Conquista'])) ?>')" alt="<?= $row['Nome'] ?>" title="<?= $row['Nome'] ?>">
+                                     style="width:60%" onclick="onClick(this,'<?= $row['Descricao'] ?>','<?= DateTime::createFromFormat ( "Y-m-d H:i:s", $row["Data_Conquista"] )->format('d/m/Y H:i:s') ?>')" alt="<?= $row['Nome'] ?>" title="<?= $row['Nome'] ?>">
                             
                                 <div><?= $row['Nome'] ?></div>
                             </div>

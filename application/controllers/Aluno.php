@@ -23,11 +23,15 @@ class Aluno extends MY_Controller {
         $this->load->model('usuario_has_curso_model');
         $this->load->model('usuario_has_medalha_model');
         $this->load->model('usuario_has_trofeu_model');
+        $this->load->helper('date');
 
         $data['nome'] = $this->session->userdata('nome');
         $data['ra'] = $this->session->userdata('ra');
         $data['title'] = "Projeto TFG - Home";
         $data['header'] = "Home";
+
+        $datestring = '%d/%m/%Y - %H:%i:%s';
+        $data['data'] = mdate($datestring,now());
 
         $data['conquista'] = $this->usuario_has_medalha_model->getConquistasMaisRecentes($data['ra']);
 
@@ -374,6 +378,7 @@ class Aluno extends MY_Controller {
         $this->load->model('usuario_has_curso_model');
         $this->load->model('curso_has_topico_model');
         $this->load->model('medalha_model');
+        $this->load->helper('date');
 
         $opcao = $this->input->post('opcao');
 
@@ -384,7 +389,7 @@ class Aluno extends MY_Controller {
         $ra = $this->session->userdata('ra');
         $curso_pin = $this->session->userdata('Curso_PIN');
         //date_default_timezone_set('America/Sao_Paulo');
-        $data_exercicio = date('Y/m/d H:i:s', time());
+        $data_exercicio = date('Y/m/d H:i:s', now());
 
         if ($opcao == $alternativa['Alternativa']) {
 
@@ -466,6 +471,7 @@ class Aluno extends MY_Controller {
     public function verificaMedalhas($id_topico) {
         $this->load->model('exercicio_model');
         $this->load->model('usuario_has_medalha_model');
+        $this->load->helper('date');
         
         $ra = $this->session->userdata('ra');
         $pin = $this->session->userdata('Curso_PIN');
@@ -485,7 +491,7 @@ class Aluno extends MY_Controller {
                         break;
                 }
                 //date_default_timezone_set('America/Sao_Paulo');
-                $data_conquista = date('Y/m/d H:i:s', time());
+                $data_conquista = date('Y/m/d H:i:s', now());
                 $dados_medalha = array(
                     'Usuario_RA' => $ra,
                     'idMedalha' => $idMedalha,
@@ -534,7 +540,7 @@ class Aluno extends MY_Controller {
             }
 
             //date_default_timezone_set('America/Sao_Paulo');
-            $data_conquista = date('Y/m/d H:i:s', time());
+            $data_conquista = date('Y/m/d H:i:s', now());
             $dados_medalha = array(
                 'Usuario_RA' => $ra,
                 'idMedalha' => $idMedalha,
@@ -558,6 +564,7 @@ class Aluno extends MY_Controller {
         $this->load->model('trofeu_model');
         $this->load->model('usuario_has_medalha_model');
         $this->load->model('usuario_has_trofeu_model');
+        $this->load->helper('date');
 
 
         if($this->usuario_has_medalha_model->ganhouTrofeuByteQueEuGosto($ra)){
@@ -565,7 +572,7 @@ class Aluno extends MY_Controller {
             $idTrofeu = 3;
 
             //date_default_timezone_set('America/Sao_Paulo');
-            $data_conquista = date('Y/m/d H:i:s', time());
+            $data_conquista = date('Y/m/d H:i:s', now());
             $dados_trofeu = array(
                 'Usuario_RA' => $ra,
                 'idTrofeu' => $idTrofeu,
@@ -583,11 +590,6 @@ class Aluno extends MY_Controller {
             }
 
         }
-
-
-
-
-
 
     }
 

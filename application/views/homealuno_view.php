@@ -19,7 +19,7 @@
                     <div class="w3-col" style="text-align: center; width:20%">
                         <img src="<?php echo base_url() . $row['Imagem'] ?>"
                              style="width:60%"
-                             onclick="onClick(this,'<?= $row['Descricao'] ?>','<?= date('d/m/Y h:m:s', strtotime($row['Data_Conquista'])) ?>')"
+                             onclick="onClick(this,'<?= $row['Descricao'] ?>','<?= DateTime::createFromFormat ( "Y-m-d H:i:s", $row["Data_Conquista"] )->format('d/m/Y H:i:s') ?>')"
                              title="<?= $row['Nome'] ?>">
 
                         <div><?= $row['Nome'] ?></div>
