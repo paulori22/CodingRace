@@ -10,6 +10,7 @@ class Login extends CI_Controller
 
     public function index()
     {
+        $this->load->helper('date');
         $this->load->model('usuarios_model');
         $validacao = self::Validar('login');
 
@@ -25,11 +26,17 @@ class Login extends CI_Controller
                 $data['logged'] = true;
                 $data['tipo_usuario'] = $tipo_usuario;
                 $this->session->set_userdata($data);
+
                 if ($tipo_usuario == 0) {
                     redirect('home_admin');
                 } elseif ($tipo_usuario == 1) {
                     redirect('home_professor');
                 } else {
+
+                    //verificar horário para troféu
+                    $data_login =  date('Y/m/d H:i:s', now());
+                    $this->verificaTrofeu($data_login);
+
                     redirect('home_aluno');
                 }
             } else {
@@ -89,6 +96,71 @@ class Login extends CI_Controller
             $this->load->view('commons/header',$data);
             $this->load->view('usuario/novousuario_view');
             $this->load->view('commons/footer');
+        }
+
+    }
+
+    public function verificaTrofeu($data_login){
+
+        $this->load->model('usuario_has_trofeu_model');
+
+        $ra = $this->session->userdata('ra');
+
+        $hora_login = intval(DateTime::createFromFormat("Y/m/d H:i:s", $data_login)->format('H'));
+
+        if($hora_login >= 1 &&  $hora_login <= 5){
+
+            $idTrofeu = 1;
+
+            if(!$this->usuario_has_trofeu_model->verificaSeUsuarioTemTrofeu($idTrofeu)){
+
+                //Se usuario ainda não tem o troféu ele ganha
+                $data_conquista = date('Y/m/d H:i:s', now());
+                $dados_trofeu = array(
+                    'Usuario_RA' => $ra,
+                    'idTrofeu' => $idTrofeu,
+                    'Data_Conquista' => $data_conquista,
+                );
+
+                $status = $this->usuario_has_trofeu_model->Inserir($dados_trofeu);
+
+                if($status){
+
+                    $data['id_modal'] = 12;
+                    $data['conquista'] = $this->trofeu_model->getTrofeuByID($idTrofeu);
+
+                    $this->load->view('commons/modal_conquista',$data);
+                }
+
+            }
+
+        }elseif ($hora_login >= 5 &&  $hora_login <= 7){
+
+
+            $idTrofeu = 2;
+
+            if(!$this->usuario_has_trofeu_model->verificaSeUsuarioTemTrofeu($idTrofeu)){
+
+                //Se usuario ainda não tem o troféu ele ganha
+                $data_conquista = date('Y/m/d H:i:s', now());
+                $dados_trofeu = array(
+                    'Usuario_RA' => $ra,
+                    'idTrofeu' => $idTrofeu,
+                    'Data_Conquista' => $data_conquista,
+                );
+
+                $status = $this->usuario_has_trofeu_model->Inserir($dados_trofeu);
+
+                if($status){
+
+                    $data['id_modal'] = 12;
+                    $data['conquista'] = $this->trofeu_model->getTrofeuByID($idTrofeu);
+
+                    $this->load->view('commons/modal_conquista',$data);
+                }
+
+            }
+
         }
 
     }

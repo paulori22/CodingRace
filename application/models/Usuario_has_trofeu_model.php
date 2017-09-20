@@ -47,4 +47,20 @@ class Usuario_has_trofeu_model extends MY_Model {
 
     }
 
+    public function verificaSeUsuarioTemTrofeu($idTrofeu){
+
+        $this->db->select('idUsuario_has_trofeu');
+        $this->db->where('idTrofeu',$idTrofeu);
+
+        $query = $this->db->get($this->table);
+
+        if ($query->num_rows() == 1) {
+            return true;
+        } else {
+            return false;
+        }
+
+
+    }
+
 }
