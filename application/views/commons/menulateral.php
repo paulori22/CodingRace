@@ -42,7 +42,7 @@
         <a href="<?=base_url('logout')?>" class="w3-padding"><i class="fa fa-remove fa-fw"></i>  Sair</a><br><br>
 
         <!-- Menu para página do Aluno -->
-    <?php elseif ($this->router->fetch_class() == 'Aluno'): ?>
+    <?php elseif ($this->router->fetch_class() == 'Aluno' || $this->router->fetch_class() == 'Login'): ?>
         <a href="#" class="w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
         <a href="<?=base_url('home_aluno')?>" class="<?=($this->router->fetch_method() == 'HomeAluno') ? 'w3-padding w3-blue' : null; ?>"><i class="fa fa-home fa-fw"></i>  Home</a>
         <a href="<?=base_url('cursos_aluno')?>" class="<?=($this->router->fetch_method() == 'CursosUsuario' || $this->router->fetch_method() == 'Topicos_Cursos' || $this->router->fetch_method() == 'RealizaExercicio' || $this->router->fetch_method() == 'ConfereExercicio') ? 'w3-padding w3-blue' : null; ?>"><i class="fa fa-book fa-fw"></i>  Cursos</a>

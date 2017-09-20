@@ -34,10 +34,14 @@ class Login extends CI_Controller
                 } else {
 
                     //verificar horário para troféu
+
+                    self::HomeAluno();
+
                     $data_login =  date('Y/m/d H:i:s', now());
                     $this->verificaTrofeu($data_login);
 
-                    redirect('home_aluno');
+
+
                 }
             } else {
                 $this->session->set_flashdata('usuario_naoencontrado', 'Usuário ou senha incorreto!');
@@ -103,12 +107,13 @@ class Login extends CI_Controller
     public function verificaTrofeu($data_login){
 
         $this->load->model('usuario_has_trofeu_model');
+        $this->load->model('trofeu_model');
 
         $ra = $this->session->userdata('ra');
 
         $hora_login = intval(DateTime::createFromFormat("Y/m/d H:i:s", $data_login)->format('H'));
 
-        if($hora_login >= 1 &&  $hora_login <= 5){
+        if($hora_login >= 1 &&  $hora_login < 5){
 
             $idTrofeu = 1;
 
@@ -135,7 +140,6 @@ class Login extends CI_Controller
             }
 
         }elseif ($hora_login >= 5 &&  $hora_login <= 7){
-
 
             $idTrofeu = 2;
 
@@ -181,5 +185,40 @@ class Login extends CI_Controller
             $this->form_validation->set_error_delimiters('<p class="error">', '</p>');
         }
         return $this->form_validation->run();
+    }
+
+    public function HomeAluno() {
+        $this->load->model('usuario_has_medalha_model');
+        $this->load->model('usuario_has_resposta_model');
+        $this->load->model('usuario_has_curso_model');
+        $this->load->model('usuario_has_medalha_model');
+        $this->load->model('usuario_has_trofeu_model');
+        $this->load->helper('date');
+
+        $data['nome'] = $this->session->userdata('nome');
+        $data['ra'] = $this->session->userdata('ra');
+        $data['title'] = "Projeto TFG - Home";
+        $data['header'] = "Home";
+
+        $datestring = '%d/%m/%Y - %H:%i:%s';
+        $data['data'] = mdate($datestring,now());
+
+        $data['conquista'] = $this->usuario_has_medalha_model->getConquistasMaisRecentes($data['ra']);
+
+        $informacoes_estatistica = array(
+            "exercicios_realizados" => $this->usuario_has_resposta_model->getTotalExerciciosRealizado($data['ra']),
+            "exercicios_acertados" => $this->usuario_has_resposta_model->getTotalAcertos($data['ra']),
+            "exercicios_acertados_primeira" => $this->usuario_has_resposta_model->getTotalAcertosDePrimeira($data['ra']),
+            "exercicios_errados" => $this->usuario_has_resposta_model->getTotalErrados($data['ra']),
+            "pontos" => $this->usuario_has_curso_model->getTotalPontosObtidos($data['ra']),
+            "medalhas" =>$this->usuario_has_medalha_model->getTotalMedalhas($data['ra']),
+            "trofeus" =>$this->usuario_has_trofeu_model->getTotalTrofeus($data['ra']),
+        );
+
+        $data['estatistica'] = $informacoes_estatistica;
+
+        $this->load->view('commons/header', $data);
+        $this->load->view('homealuno_view');
+        $this->load->view('commons/footer');
     }
 }

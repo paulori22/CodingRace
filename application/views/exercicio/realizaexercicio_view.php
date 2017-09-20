@@ -98,20 +98,3 @@
         </form>
 
     </div>
-    
-<!-- Animated Modal-->
-  <div id="modal_acertou_exercicio" class="w3-modal" >
-    <div class="w3-modal-content w3-animate-top w3-card-8">
-      <header class="w3-container w3-green w3-center">
-        <span onclick="document.getElementById('modal_acertou_exercicio').style.display='none'"
-        class="w3-closebtn">&times;</span>
-        <h2> Acertou o exercício! </h2>
-      </header>
-      <div class="w3-container w3-center">
-        <h3>Ganhou <b>16</b> pontos!</h3>
-      </div>
-<!--      <footer class="w3-container w3-green">
-        <p>Quanto mais você acertar seguidas, mais pontos ganhará!</p>
-      </footer> -->
-    </div>
-  </div>
