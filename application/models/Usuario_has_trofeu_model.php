@@ -47,10 +47,11 @@ class Usuario_has_trofeu_model extends MY_Model {
 
     }
 
-    public function verificaSeUsuarioTemTrofeu($idTrofeu){
+    public function verificaSeUsuarioTemTrofeu($idTrofeu,$ra){
 
         $this->db->select('idUsuario_has_trofeu');
         $this->db->where('idTrofeu',$idTrofeu);
+        $this->db->where('Usuario_RA',$ra);
 
         $query = $this->db->get($this->table);
 

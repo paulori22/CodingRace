@@ -117,7 +117,7 @@ class Login extends CI_Controller
 
             $idTrofeu = 1;
 
-            if(!$this->usuario_has_trofeu_model->verificaSeUsuarioTemTrofeu($idTrofeu)){
+            if(!$this->usuario_has_trofeu_model->verificaSeUsuarioTemTrofeu($idTrofeu, $ra)){
 
                 //Se usuario ainda não tem o troféu ele ganha
                 $data_conquista = date('Y/m/d H:i:s', now());
@@ -143,7 +143,7 @@ class Login extends CI_Controller
 
             $idTrofeu = 2;
 
-            if(!$this->usuario_has_trofeu_model->verificaSeUsuarioTemTrofeu($idTrofeu)){
+            if(!$this->usuario_has_trofeu_model->verificaSeUsuarioTemTrofeu($idTrofeu, $ra)){
 
                 //Se usuario ainda não tem o troféu ele ganha
                 $data_conquista = date('Y/m/d H:i:s', now());
