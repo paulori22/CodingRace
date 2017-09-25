@@ -97,6 +97,10 @@ $route['atualizarexercicio_admin/(:num)/(:num)'] = 'Admin/AtualizaExercicio/$1/$
 /** Rotas Home */
 $route['home_professor'] = 'Professor/HomeProfessor';
 
+/** Rotas Estatísticas dos Alunos */
+$route['estatisticas_aluno'] = 'Professor/EstatisticasAlunos';
+$route['estatisticas_aluno_cursos/(:num)'] = 'Professor/EstatisticasAlunosCursos/$1';
+
 /** Rotas Usuários */
 $route['editarusuario_professor/(:num)'] = 'Professor/EditaUsuario/$1';
 $route['atualizarusuario_professor'] = 'Professor/AtualizaUsuario';
