@@ -23,7 +23,7 @@
                     <?php if ($topicos == FALSE): ?>
                         <tr><td colspan="2">Nenhum tópico cadastrado</td></tr>
                     <?php else: ?>
-                        <?php while (list($nome, $topico) = each($exercicios_topicos)) { ?>
+                        <?php foreach ($exercicios_topicos as $nome => $topico) { ?>
                             <tr>
                                 <td><?= $nome ?></td>
 

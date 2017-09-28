@@ -101,5 +101,32 @@ class Usuario_has_resposta_model extends MY_Model
 
     }
 
+    function getTotalErrosPorCategoriaDeBloom($curso_PIN, $categoria_bloom){
+
+        $this->db->select('idUsuario_has_Resposta, Resposta_Correta');
+        $this->db->join('Exercicio','Usuario_has_Resposta.Exercicio_idExercicio = Exercicio.idExercicio');
+        $this->db->where('Curso_PIN',$curso_PIN);
+        $this->db->where('Exercicio.Categoria_Bloom',$categoria_bloom);
+        $this->db->where('Resposta_Correta',0);
+
+        $query = $this->db->get($this->table);
+
+        return $query->num_rows();
+
+    }
+
+    function getTotalErrosPorTopicoID($curso_PIN, $topico_id){
+
+        $this->db->select('idUsuario_has_Resposta, Resposta_Correta');
+        $this->db->join('Exercicio','Usuario_has_Resposta.Exercicio_idExercicio = Exercicio.idExercicio');
+        $this->db->where('Curso_PIN',$curso_PIN);
+        $this->db->where('Exercicio.Topico_idTopico',$topico_id);
+        $this->db->where('Resposta_Correta',0);
+
+        $query = $this->db->get($this->table);
+
+        return $query->num_rows();
+    }
+
 
 }

@@ -54,8 +54,10 @@ class Usuario_has_curso_model extends MY_Model
     {
         if(is_null($pin))
             return false;
-        $this->db->select('Usuario_RA');
+        $this->db->select('Usuario_RA, Usuario.Nome as Nome');
+        $this->db->join('Usuario','Usuario_RA = RA');
         $this->db->where('Curso_PIN', $pin);
+        $this->db->where('Usuario.Tipo_Usuario !=','1');
         $query = $this->db->get($this->table);
         if ($query->num_rows() > 0) {
             return $query->result_array();

@@ -71,4 +71,19 @@ class Curso_has_topico_model extends MY_Model
         $this->db->where('Topico_idTopico', $id);
         return $this->db->delete($this->table);
     }
+
+    public function getTopicosDoCurso($curso_PIN){
+
+        $this->db->select('Topico_idTopico, Topico.Nome as Nome');
+        $this->db->join('Topico','Topico_idTopico = idTopico');
+        $this->db->where('Curso_PIN',$curso_PIN);
+
+        $query = $this->db->get($this->table);
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return null;
+        }
+    }
 }
