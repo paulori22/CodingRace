@@ -278,9 +278,10 @@ class Professor extends MY_Controller
         $this->load->view('commons/footer');
     }
 
-    public function CadCursoUsuario()
-    {
+    public function CadCursoUsuario() {
         $this->load->model('usuario_has_curso_model');
+        $this->load->model('cursos_model');
+
         $ra = $this->session->userdata('ra');
         $pin = $this->input->post('PIN');
 
@@ -289,14 +290,19 @@ class Professor extends MY_Controller
             'Curso_PIN' => $pin,
         );
 
+
+
         if (is_null($pin) || $pin == "") {
             echo "<script> window.alert('Favor inserir um curso')</script>";
             $this->CursosUsuario();
         } else {
 
+            $validaExistenciaDoCurso = $this->cursos_model->verificaExistenciaDoCurso($pin);
+
             $validacurso = $this->usuario_has_curso_model->BuscaCursoCadastrado($ra, $pin);
 
-            if ($validacurso) {
+
+            if ($validacurso && $validaExistenciaDoCurso) {
                 $status = $this->usuario_has_curso_model->Inserir($dados_curso_cadastrado);
                 if (!$status) {
                     echo "<script> window.alert('Não foi possível cadastrar o curso')</script>";
@@ -305,8 +311,11 @@ class Professor extends MY_Controller
                     echo "<script> window.alert('Curso cadastrado com sucesso')</script>";
                     $this->CursosUsuario();
                 }
-            } else {
+            } elseif(!$validacurso) {
                 echo "<script> window.alert('Curso já cadastrado para esse usuário')</script>";
+                $this->CursosUsuario();
+            }else{
+                echo "<script> window.alert('Curso inexistente')</script>";
                 $this->CursosUsuario();
             }
         }

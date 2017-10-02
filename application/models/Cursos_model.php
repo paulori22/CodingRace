@@ -84,4 +84,19 @@ class Cursos_model extends MY_Model
         }
 
     }
+
+    function verificaExistenciaDoCurso($curso_PIN){
+
+        if(is_null($curso_PIN))
+            return false;
+
+        $this->db->where('PIN', $curso_PIN);
+        $query = $this->db->get($this->table);
+
+        if ($query->num_rows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
