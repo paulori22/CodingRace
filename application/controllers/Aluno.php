@@ -17,6 +17,22 @@ class Aluno extends MY_Controller {
         }
     }
 
+    public function getNivelExp($ra){
+
+        $this->load->model('nivel_model');
+        $this->load->model('usuarios_model');
+
+        $xp = $this->usuarios_model->getExpAluno($ra);
+
+        $dados = $this->nivel_model->getNivelExp($xp);
+
+        $dados['XP_Usuario'] = $xp;
+
+
+        return $dados;
+
+    }
+
     public function HomeAluno() {
         $this->load->model('usuario_has_medalha_model');
         $this->load->model('usuario_has_resposta_model');
@@ -47,6 +63,8 @@ class Aluno extends MY_Controller {
 
         $data['estatistica'] = $informacoes_estatistica;
 
+        $data['info_aluno'] = $this->getNivelExp($data['ra']);
+
         $this->load->view('commons/header', $data);
         $this->load->view('homealuno_view');
         $this->load->view('commons/footer');
@@ -61,6 +79,8 @@ class Aluno extends MY_Controller {
         $data['ra'] = $this->session->userdata('ra');
         $data['title'] = "Projeto TFG - Leaderboard";
 
+        $data['info_aluno'] = $this->getNivelExp($data['ra']);
+
         if ($this->usuario_has_curso_model->QuantidadeCursosAluno($data['ra']) == 1) {
 
             $curso_PIN = $this->usuario_has_curso_model->CursosUsuario($data['ra'])[0]['Curso_PIN'];
@@ -69,6 +89,8 @@ class Aluno extends MY_Controller {
 
             $data['header'] = "Leaderboard - " . $data['curso']['Nome'];
             $data['alunos_curso'] = $this->usuario_has_curso_model->UsuariosCursoLeaderboard($curso_PIN);
+
+
 
             $this->load->view('commons/header', $data);
             $this->load->view('leaderboard/leaderboard');
@@ -100,6 +122,8 @@ class Aluno extends MY_Controller {
         $data['header'] = "Leaderboard - " . $data['curso']['Nome'];
         $data['alunos_curso'] = $this->usuario_has_curso_model->UsuariosCursoLeaderboard($curso_PIN);
 
+        $data['info_aluno'] = $this->getNivelExp($data['ra']);
+
         $this->load->view('commons/header', $data);
         $this->load->view('leaderboard/leaderboard');
         $this->load->view('commons/footer');
@@ -115,6 +139,8 @@ class Aluno extends MY_Controller {
         $data['nome'] = $this->session->userdata('nome');
         $data['ra'] = $this->session->userdata('ra');
         $data['title'] = "Projeto TFG - Minhas Conquistas";
+
+        $data['info_aluno'] = $this->getNivelExp($data['ra']);
 
         if ($this->usuario_has_curso_model->QuantidadeCursosAluno($data['ra']) == 1) {
 
@@ -162,6 +188,8 @@ class Aluno extends MY_Controller {
 
         $data['header'] = "Minhas Conquistas - " . $data['curso']['Nome'];
 
+        $data['info_aluno'] = $this->getNivelExp($data['ra']);
+
 
         $this->load->view('commons/header', $data);
         $this->load->view('minhas_conquistas/minhas_conquistas');
@@ -181,6 +209,8 @@ class Aluno extends MY_Controller {
             $data['ra'] = $this->session->userdata('ra');
             $data['title'] = "Projeto TFG - Edita Usuário";
             $data['header'] = "Edita Usuário";
+
+            $data['info_aluno'] = $this->getNivelExp($data['ra']);
 
             /** Carrega a view */
             $this->load->view('commons/header', $data);
@@ -228,13 +258,14 @@ class Aluno extends MY_Controller {
         $this->load->model('cursos_model');
 
         $data['ra'] = $this->session->userdata('ra');
-        $ra = $data['ra'];
         $data['nome'] = $this->session->userdata('nome');
         $data['title'] = "Projeto TFG - Minhas Disciplinas";
         $data['header'] = "Minhas Disciplinas";
 
-        $pin = $this->usuario_has_curso_model->CursosUsuario($ra);
+        $pin = $this->usuario_has_curso_model->CursosUsuario($data['ra']);
         $data['cursos'] = $this->cursos_model->GetBySomePIN($pin);
+
+        $data['info_aluno'] = $this->getNivelExp($data['ra']);
 
         $this->load->view('commons/header', $data);
         $this->load->view('curso/cursos_view');
@@ -329,6 +360,8 @@ class Aluno extends MY_Controller {
         $data['title'] = "Projeto TFG - Discplina ";
         $data['header'] = "Disciplina";
 
+        $data['info_aluno'] = $this->getNivelExp($data['ra']);
+
         /** Carrega a view */
         $this->load->view('commons/header', $data);
         $this->load->view('cursos_alunos/cursoaluno_view');
@@ -348,6 +381,8 @@ class Aluno extends MY_Controller {
         $data['ra'] = $this->session->userdata('ra');
         $data['title'] = "Projeto TFG - Exercícios ";
         $data['header'] = "Exercícios";
+
+        $data['info_aluno'] = $this->getNivelExp($data['ra']);
 
         /** Carrega a view */
         $this->load->view('commons/header', $data);
@@ -375,6 +410,8 @@ class Aluno extends MY_Controller {
         $data['title'] = "Projeto TFG - Exercício";
         $data['header'] = "Exercício";
 
+        $data['info_aluno'] = $this->getNivelExp($data['ra']);
+
         /** Carrega a view */
         $this->load->view('commons/header', $data);
         $this->load->view('exercicio/realizaexercicio_view');
@@ -389,6 +426,7 @@ class Aluno extends MY_Controller {
         $this->load->model('curso_has_topico_model');
         $this->load->model('medalha_model');
         $this->load->helper('date');
+        $this->load->model('usuarios_model');
 
         $opcao = $this->input->post('opcao');
 
@@ -421,6 +459,7 @@ class Aluno extends MY_Controller {
 
                 $tentativas = $this->usuario_has_resposta_model->GetTentativasExercicios($idExercicio, $ra, $curso_pin);
                 $data['pontos'] = $this->usuario_has_curso_model->AdicionarPontosCursoAluno($exercicio['Pontos'], $ra, $curso_pin, $tentativas);
+                $data['xp'] = $this->usuarios_model->AdicionarXPAluno(10*$exercicio['Pontos'],$ra);
 
                 $this->load->view('commons/modal_acertou_exercicio',$data);
 

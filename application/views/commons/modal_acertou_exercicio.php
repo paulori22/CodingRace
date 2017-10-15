@@ -8,6 +8,7 @@
         </header>
         <div class="w3-container w3-center">
             <h3>Ganhou <b><?= $pontos ?></b> pontos!</h3>
+            <h3>Ganhou <b><?= $xp ?></b> de experiência!</h3>
         </div>
         <!--      <footer class="w3-container w3-green">
                 <p>Quanto mais você acertar seguidas, mais pontos ganhará!</p>

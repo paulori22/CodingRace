@@ -77,4 +77,40 @@ class Usuarios_model extends MY_Model
         }
     }
 
+    public function AdicionarXPAluno($xp,$ra)
+    {
+        if(is_null($xp)  || is_null($ra))
+            return false;
+
+
+        $this->db->set('XP','XP + '.$xp,FALSE);
+
+        $this->db->where('RA',$ra);
+
+
+        $query = $this->db->update($this->table);
+
+        if ($query) {
+            return $xp;
+        } else {
+            return null;
+        }
+    }
+
+    public function getExpAluno($ra){
+        if(is_null($ra))
+            return false;
+
+        $this->db->select('XP');
+        $this->db->where('ra',$ra);
+
+        $query = $this->db->get($this->table);
+
+        if ($query->num_rows() > 0) {
+            return $query->row()->XP;
+        } else {
+            return null;
+        }
+    }
+
 }

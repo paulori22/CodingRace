@@ -9,6 +9,7 @@
     <div class="w3-container w3-row w3-center">
         <div class="w3-col s8">
             <span>Bem-vindo, <strong><?php echo $nome?></strong></span><br>
+
             <?php if ($this->router->fetch_class() == 'Admin'): ?>
                 <a href="<?=base_url('editarusuario_admin')."/".$ra?>" class="w3-hover-none w3-hover-text-green w3-show-inline-block"><i class="fa fa-user"></i></a>
             <?php elseif ($this->router->fetch_class() == 'Professor'): ?>
@@ -17,8 +18,23 @@
                 <a href="<?=base_url('editarusuario_aluno')."/".$ra?>" class="w3-hover-none w3-hover-text-green w3-show-inline-block"><i class="fa fa-user"></i></a>
             <?php endif; ?>
             <!--<a href="#" class="w3-hover-none w3-hover-text-blue w3-show-inline-block"><i class="fa fa-cog"></i></a>-->
+
+            <?php if ($this->router->fetch_class() == 'Aluno'):?>
+
+                <div class="w3-container w3-center">Nivel <?=  $info_aluno['Nivel']?></div>
+                <div class="w3-light-grey w3-round-xlarge">
+
+                    <div id="expBar" class="w3-container w3-green w3-center w3-round-xlarge" style="width:<?= ($info_aluno['XP_Usuario'] == 0) ? 0 : 100*(float)$info_aluno['XP_Usuario']/$info_aluno['XP']; ?>% "><?=  $info_aluno['XP_Usuario']?>/<?=  $info_aluno['XP']?></div>
+                </div>
+
+            <?php endif; ?>
+
+
         </div>
+
+
     </div>
+
     <hr>
     <div class="w3-container">
         <h5>Menu</h5>
