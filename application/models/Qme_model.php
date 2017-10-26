@@ -39,4 +39,5 @@ class QME_model extends MY_Model
         $this->db->where('Exercicio_idExercicio', $id);
         return $this->db->update($this->table, $data);
     }
+
 }

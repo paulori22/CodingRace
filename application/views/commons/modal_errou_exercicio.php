@@ -23,6 +23,11 @@
 
         <div class="w3-container w3-center">
             <h3> <?= $texto ?></h3>
+
+            <?php if(isset($resposta_correta)): ?>
+                <h3>A resposta correta é a <b><?= $alternativa." ) ".strip_tags($resposta_correta) ?></b></h3>
+            <?php endif; ?>
+
         </div>
     </div>
 </div>

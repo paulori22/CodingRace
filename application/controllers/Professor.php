@@ -108,21 +108,24 @@ class Professor extends MY_Controller
 
         $data['header'] = "Estatísticas dos Alunos - " . $data['curso']['Nome'];
 
-        for($i = 1; $i < 7; $i++){
-            $data['tabela_erros_por_bloom'][$i] = $this->usuario_has_resposta_model->getTotalErrosPorCategoriaDeBloom($curso_PIN,$i); ;
+        for ($i = 1; $i < 7; $i++) {
+            $data['tabela_erros_por_bloom'][$i] = $this->usuario_has_resposta_model->getTotalErrosPorCategoriaDeBloom($curso_PIN, $i);;
         }
 
         $topicos = $this->curso_has_topico_model->getTopicosDoCurso($curso_PIN);
-        foreach ($topicos as $row){
+        foreach ($topicos as $row) {
             $data['tabela_erros_por_topico'][$row['Nome']] = $this->usuario_has_resposta_model->getTotalErrosPorTopicoID($curso_PIN, $row['Topico_idTopico']);
         }
 
         $alunos_curso = $this->usuario_has_curso_model->UsuariosCurso($curso_PIN);
 
-        foreach ($alunos_curso as $aluno) {
-            foreach ($topicos as $row) {
+        if (isset($alunos_curso)) {
 
-                $data['tabela_exercicios_por_aluno'][$aluno['Usuario_RA']][$row['Topico_idTopico']] = $this->exercicio_model->GetListaExerciciosAlunoTopico($row['Topico_idTopico'],$aluno['Usuario_RA'] , $curso_PIN);
+            foreach ($alunos_curso as $aluno) {
+                foreach ($topicos as $row) {
+
+                    $data['tabela_exercicios_por_aluno'][$aluno['Usuario_RA']][$row['Topico_idTopico']] = $this->exercicio_model->GetListaExerciciosAlunoTopico($row['Topico_idTopico'], $aluno['Usuario_RA'], $curso_PIN);
+                }
             }
         }
 

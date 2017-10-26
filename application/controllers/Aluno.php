@@ -275,6 +275,7 @@ class Aluno extends MY_Controller {
     public function CadCursoUsuario() {
         $this->load->model('usuario_has_curso_model');
         $this->load->model('cursos_model');
+        $this->load->model('usuario_has_resposta_model');
 
         $ra = $this->session->userdata('ra');
         $pin = $this->input->post('PIN');
@@ -303,6 +304,10 @@ class Aluno extends MY_Controller {
                     $this->CursosUsuario();
                 } else {
                     echo "<script> window.alert('Curso cadastrado com sucesso')</script>";
+                    //Caso o usuario exclua-se do curso ao secadastrar novamente ele retorna com todos os pontos
+                    $pontos_obtidos = $this->usuario_has_resposta_model->getTotalPontosCurso($ra,$pin);
+
+                    $this->usuario_has_curso_model->updatePontuacaoAluno($ra,$pin,$pontos_obtidos);
                     $this->CursosUsuario();
                 }
             } elseif(!$validacurso) {
@@ -494,6 +499,13 @@ class Aluno extends MY_Controller {
             } else {
 
                 $data['tentativas'] = $this->usuario_has_resposta_model->GetTentativasExercicios($idExercicio, $ra, $curso_pin);
+
+                if($data['tentativas']==3){
+                    $data['resposta_correta'] = $alternativa['item'.$alternativa['Alternativa']];
+                    $data['alternativa'] = $alternativa['Alternativa'];
+                }
+
+
                 $this->load->view('commons/modal_errou_exercicio',$data);
 
                 $this->session->set_flashdata('error', 'Histórico inserido com sucesso!');

@@ -155,4 +155,23 @@ class Usuario_has_curso_model extends MY_Model
             return null;
         }
     }
+
+    public function updatePontuacaoAluno($ra,$pin,$pontuacao){
+
+        if(is_null($ra) || is_null($pin))
+            return false;
+
+        $this->db->set('Pontuacao','Pontuacao + '.$pontuacao,FALSE);
+        $this->db->where('Usuario_RA',$ra);
+        $this->db->where('Curso_PIN',$pin);
+
+
+        $query = $this->db->update($this->table);
+
+        if ($query) {
+            return true;
+        } else {
+            return null;
+        }
+    }
 }

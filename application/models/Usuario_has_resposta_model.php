@@ -128,5 +128,28 @@ class Usuario_has_resposta_model extends MY_Model
         return $query->num_rows();
     }
 
+    function getTotalPontosCurso($ra,$pin){
+
+        if (is_null($ra) || is_null($pin))
+            return false;
+
+        $sql = "SELECT SUM(Exercicio.Pontos) AS TotalPontos\n"
+
+            . "FROM `Usuario_has_Resposta` \n"
+
+            . "JOIN Exercicio ON Exercicio_idExercicio = Exercicio.idExercicio\n"
+
+            . "WHERE Usuario_RA=$ra AND Resposta_Correta = 1 AND Curso_PIN = $pin";
+
+        $query = $this->db->query($sql);
+
+        if ($query->num_rows() > 0) {
+            return $query->row()->TotalPontos;
+        } else {
+            return null;
+        }
+
+    }
+
 
 }
