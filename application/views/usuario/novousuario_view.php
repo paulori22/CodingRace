@@ -18,7 +18,20 @@
                     <p><?php echo $this->session->flashdata('error'); ?></p>
                 <?php endif; ?>
             </div>
-            <?php echo validation_errors();?>
+
+
+            <?php
+
+             $erros = validation_errors();
+            if(!empty($erros))
+            {
+                echo "<div class='w3-container w3-center w3-red'>";
+                echo $erros;
+                echo "</div>";
+            }
+
+
+            ?>
             <div class="w3-container w3-content">
                 <form class="w3-container w3-light-grey w3-text-black w3-margin" id="form_novousuario" method="post" enctype="multipart/form-data">
                     <h2 class="w3-center">Novo Usuário</h2>
@@ -26,21 +39,21 @@
                     <div class="w3-row w3-section">
                         <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
                         <div class="w3-rest">
-                            <input class="w3-input w3-border" name="nome" id="nome" type="text" placeholder="Nome" >
+                            <input class="w3-input w3-border" name="nome" id="nome" value="<?php echo set_value('nome'); ?>" type="text" placeholder="Nome" >
                         </div>
                     </div>
 
                     <div class="w3-row w3-section">
                         <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-book"></i></div>
                         <div class="w3-rest">
-                            <input class="w3-input w3-border" name="ra" id="ra" type="text" placeholder="RA" >
+                            <input class="w3-input w3-border" name="ra" id="ra" value="<?php echo set_value('ra'); ?>" type="text" placeholder="RA" >
                         </div>
                     </div>
 
                     <div class="w3-row w3-section">
                         <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-envelope-o"></i></div>
                         <div class="w3-rest">
-                            <input class="w3-input w3-border" name="email" id="email" type="text" placeholder="Email" >
+                            <input class="w3-input w3-border" name="email" id="email" value="<?php echo set_value('email'); ?>" type="text" placeholder="Email" >
                         </div>
                     </div>
 
