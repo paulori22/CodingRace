@@ -59,7 +59,7 @@
                                         <?php elseif ($this->router->fetch_class() == 'Professor'): ?>
                                             <td><a href="<?=base_url('editarcurso_professor')."/".$row['PIN']?>" style="text-decoration: none"><i class="w3-xlarge fa fa-edit">&nbsp;</i></a><a href="<?=base_url('excluircursousuario_professor')."/".$row['PIN']?>" onclick="return deletar();"><i class="w3-xlarge fa fa-trash"></i></a></td>
                                         <?php elseif ($this->router->fetch_class() == 'Aluno'): ?>
-                                            <td><a href="<?=base_url("realizacurso_aluno")."/".$row['PIN']?>"><i class="w3-xlarge fa fa-play-circle">&nbsp;&nbsp;</i></a><a href="<?=base_url('excluircursousuario_aluno')."/".$row['PIN']?> " onclick="return deletar();" ><i class="w3-xlarge fa fa-trash"></i></a></td>
+                                            <td><a title="Realizar Exercícios" href="<?=base_url("realizacurso_aluno")."/".$row['PIN']?>"><i class="w3-xxxlarge fa fa-play-circle">&nbsp;&nbsp;</i></a><a title="Excluir Curso" href="<?=base_url('excluircursousuario_aluno')."/".$row['PIN']?> " onclick="return deletar();" ><i class="w3-xlarge fa fa-trash"></i></a></td>
                                         <?php endif; ?>
                                     </tr>
                                 <?php endforeach;?>
