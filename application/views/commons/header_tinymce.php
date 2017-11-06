@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-        <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+        <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=ibbsokanb41wgo10z9oopd6mo9k9spge0racq5k7kqjsnwtc"></script>
         <script>tinymce.init({ selector:'textarea', branding: false});</script>
         <style>
             
