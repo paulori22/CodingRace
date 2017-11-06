@@ -161,6 +161,10 @@ class Usuario_has_curso_model extends MY_Model
         if(is_null($ra) || is_null($pin))
             return false;
 
+
+        if (!isset($pontuacao))
+            $pontuacao = 0;
+
         $this->db->set('Pontuacao','Pontuacao + '.$pontuacao,FALSE);
         $this->db->where('Usuario_RA',$ra);
         $this->db->where('Curso_PIN',$pin);
