@@ -47,7 +47,7 @@
         <a href="<?=base_url('usuarios_admin')?>" class="<?=($this->router->fetch_method() == 'Usuarios') ? 'w3-padding w3-blue' : null; ?>"><i class="fa fa-users fa-fw"></i>  Usuários</a>
         <a href="<?=base_url('cursos_admin')?>" class="<?=($this->router->fetch_method() == 'Cursos') ? 'w3-padding w3-blue' : null; ?>"><i class="fa fa-book fa-fw"></i>  Cursos</a>
         <a href="<?=base_url('topicos_admin')?>" class="<?=($this->router->fetch_method() == 'Topicos') ? 'w3-padding w3-blue' : null; ?>"><i class="fa fa-cog fa-fw"></i>  Tópicos</a>
-        <a href="<?=base_url('logout')?>" class="w3-padding"><i class="fa fa-remove fa-fw"></i>  Sair</a><br><br>
+        <a href="<?=base_url('logout')?>" class="w3-padding" onclick="return sair()"><i class="fa fa-remove fa-fw"></i>  Sair</a><br><br>
 
     <!-- Menu para página do Professor -->
     <?php elseif ($this->router->fetch_class() == 'Professor'): ?>
@@ -56,7 +56,7 @@
         <a href="<?=base_url('estatisticas_aluno')?>" class="<?=($this->router->fetch_method() == 'EstatisticasAlunos') ? 'w3-padding w3-blue' : null; ?>"><i class="fa fa-home fa-fw"></i>  Estatísticas dos Alunos</a>
         <a href="<?=base_url('cursoscadastrados_professor')?>" class="<?=($this->router->fetch_method() == 'Cursos') ? 'w3-padding w3-blue' : null; ?>"><i class="fa fa-book fa-fw"></i>  Cursos</a>
         <a href="<?=base_url('topicos_professor')?>" class="<?=($this->router->fetch_method() == 'Topicos') ? 'w3-padding w3-blue' : null; ?>"><i class="fa fa-cog fa-fw"></i>  Tópicos</a>
-        <a href="<?=base_url('logout')?>" class="w3-padding"><i class="fa fa-remove fa-fw"></i>  Sair</a><br><br>
+        <a href="<?=base_url('logout')?>" class="w3-padding" onclick="return sair()"><i class="fa fa-remove fa-fw"></i>  Sair</a><br><br>
 
         <!-- Menu para página do Aluno -->
     <?php elseif ($this->router->fetch_class() == 'Aluno' || $this->router->fetch_class() == 'Login'): ?>
@@ -65,7 +65,7 @@
         <a href="<?=base_url('cursos_aluno')?>" class="<?=($this->router->fetch_method() == 'CursosUsuario' || $this->router->fetch_method() == 'Topicos_Cursos' || $this->router->fetch_method() == 'RealizaExercicio' || $this->router->fetch_method() == 'ConfereExercicio') ? 'w3-padding w3-blue' : null; ?>"><i class="fa fa-book fa-fw"></i>  Cursos</a>
         <a href="<?=base_url('minhas_conquistas')?>" class="<?=($this->router->fetch_method() == 'Minhas_Conquistas' || $this->router->fetch_method() == 'Minhas_ConquistasCurso') ? 'w3-padding w3-blue' : null; ?>"><i class="fa fa-trophy"></i>  Minhas Conquistas</a>
         <a href="<?=base_url('leaderboard')?>" class="<?=($this->router->fetch_method() == 'Leaderboard' || $this->router->fetch_method() == 'LeaderboardCurso') ? 'w3-padding w3-blue' : null; ?>"><i class="fa fa-bar-chart"></i>  Leaderboard</a>
-        <a href="<?=base_url('logout')?>" class="w3-padding"><i class="fa fa-remove fa-fw"></i>  Sair</a><br><br>    
+        <a href="<?=base_url('logout')?>" class="w3-padding" onclick="return sair()"><i class="fa fa-remove fa-fw"></i>  Sair</a><br><br>
     <?php endif; ?>
 </nav>
 

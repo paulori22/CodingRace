@@ -51,6 +51,10 @@
                 return confirm('Você tem certeza que deletar?');
             }
 
+            function sair() {
+                return confirm('Você tem certeza que deseja sair do CodingRace?');
+            }
+
             // Modal Image Gallery
             function onClick(element,descricao,data_conquista) {
               document.getElementById("img01").src = element.src;

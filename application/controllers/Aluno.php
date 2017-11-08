@@ -90,8 +90,6 @@ class Aluno extends MY_Controller {
             $data['header'] = "Leaderboard - " . $data['curso']['Nome'];
             $data['alunos_curso'] = $this->usuario_has_curso_model->UsuariosCursoLeaderboard($curso_PIN);
 
-
-
             $this->load->view('commons/header', $data);
             $this->load->view('leaderboard/leaderboard');
             $this->load->view('commons/footer');
@@ -458,7 +456,7 @@ class Aluno extends MY_Controller {
             $status = $this->usuario_has_resposta_model->Inserir($dados_resposta);
 
             if (!$status) {
-                $this->session->set_flashdata('error', 'Não foi possível inserir o histórico!');
+                //$this->session->set_flashdata('error', 'Não foi possível inserir o histórico!');
                 self::ExerciciosTopico($exercicio['Topico_idTopico']);
             } else {
 
@@ -468,7 +466,7 @@ class Aluno extends MY_Controller {
 
                 $this->load->view('commons/modal_acertou_exercicio',$data);
 
-                $this->session->set_flashdata('error', 'Histórico inserido com sucesso!');
+                //$this->session->set_flashdata('error', 'Histórico inserido com sucesso!');
 
                 $this->verificaMedalhas($exercicio['Topico_idTopico']);
 
@@ -494,7 +492,7 @@ class Aluno extends MY_Controller {
             );
             $status = $this->usuario_has_resposta_model->Inserir($dados_resposta);
             if (!$status) {
-                $this->session->set_flashdata('error', 'Não foi possível inserir o histórico!');
+                //$this->session->set_flashdata('error', 'Não foi possível inserir o histórico!');
                 self::RealizaExercicio($idExercicio);
             } else {
 
@@ -508,7 +506,7 @@ class Aluno extends MY_Controller {
 
                 $this->load->view('commons/modal_errou_exercicio',$data);
 
-                $this->session->set_flashdata('error', 'Histórico inserido com sucesso!');
+                //$this->session->set_flashdata('error', 'Histórico inserido com sucesso!');
                 if($data['tentativas'] < 3)
                     self::RealizaExercicio($idExercicio);
                 else{
