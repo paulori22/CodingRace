@@ -23,9 +23,21 @@ class Nivel_model extends MY_Model
         } else {
             return null;
         }
+    }
 
+    public function getNivel($xp){
 
+        $this->db->select_min('Nivel');
+        $this->db->select_min('XP');
+        $this->db->where('XP >=',$xp);
 
+        $query = $this->db->get($this->table);
+
+        if ($query->num_rows() > 0) {
+            return $query->row()->Nivel;
+        } else {
+            return null;
+        }
     }
 
 }

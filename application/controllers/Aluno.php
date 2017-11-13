@@ -74,6 +74,7 @@ class Aluno extends MY_Controller {
         $this->load->model('usuario_has_curso_model');
         $this->load->model('usuarios_model');
         $this->load->model('cursos_model');
+        $this->load->model('nivel_model');
 
         $data['nome'] = $this->session->userdata('nome');
         $data['ra'] = $this->session->userdata('ra');
@@ -89,6 +90,11 @@ class Aluno extends MY_Controller {
 
             $data['header'] = "Leaderboard - " . $data['curso']['Nome'];
             $data['alunos_curso'] = $this->usuario_has_curso_model->UsuariosCursoLeaderboard($curso_PIN);
+
+            foreach ($data['alunos_curso'] as $key=>$aluno)
+            {
+                $data['alunos_curso'][$key]['Nivel'] = $this->nivel_model->getNivel($aluno['XP']);
+            }
 
             $this->load->view('commons/header', $data);
             $this->load->view('leaderboard/leaderboard');
@@ -654,7 +660,10 @@ class Aluno extends MY_Controller {
 
     public function Validar($operacao) {
         if ($operacao == 'novo_usuario') {
-            $this->form_validation->set_rules('ra', 'RA', 'required|is_unique[Usuario.RA]');
+
+            $this->form_validation->set_rules('ra', 'RA', 'required|is_unique[Usuario.RA]',
+                array('is_unique[Usuario.RA]' => 'O RA utilizado já existe no CodingRace'));
+
             $this->form_validation->set_rules('nome', 'Nome', 'required');
             $this->form_validation->set_rules('senha', 'Senha', 'required');
             $this->form_validation->set_rules('email', 'Email', 'required');

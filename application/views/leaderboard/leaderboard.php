@@ -14,6 +14,7 @@
                     <tr class="w3-light-grey">
                         <th>Posição</th>
                         <th>Nome</th>
+                        <th>Nível</th>
                         <th>Pontuação Total (% do máximo de pontos)</th>
                         <th>Troféus</th>
                         <th>Medalhas</th>
@@ -29,6 +30,7 @@
                                 <tr>
                                     <td><?= $posicao ?></td>
                                     <td><?= $row['Nome'] ?></td>
+                                    <td><?= $row['Nivel']?></td>
                                     <td><?= $row['Pontuacao'];if($row['Pontuacao']> 0 ){$porcentagem = number_format((float)($row['Pontuacao']/$total_pontos_curso)*100, 2, ',', '');echo ' ('.$porcentagem.'%)';}else{echo ' (0%)';} ?></td>
                                     <td><?= $row['Qtd_Trofeu']?></td>
                                     <td><?= $row['Qtd_Medalha']?></td>
