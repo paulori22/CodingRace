@@ -80,7 +80,7 @@
         </table>
 
         <h5><i class="fa fa-line-chart"></i> Estatísticas Gerais dos alunos:</h5>
-        <table class="w3-table-all">
+        <table class="w3-table-all" id="alunos_table">
             <thead>
             <tr class="w3-light-grey">
                 <th>Aluno</th>
@@ -108,7 +108,12 @@
                             <?php foreach ($topico as $row): ?>
 
                                 <?php if ($row['Resposta_Correta'] == 1) { ?>
-                                    <span class="circle w3-green" ><?php echo $n ?></span>
+                                    <?php if ($row['Tentativas'] == 1) { ?>
+                                        <span class="circle w3-light-green" ><?php echo $n ?></span>
+
+                                    <?php } else { ?>
+                                        <span class="circle w3-green" ><?php echo $n ?></span>
+                                    <?php } ?>
 
                                 <?php } else { ?>
                                     <?php if ($row['Tentativas'] == 0) { ?>
@@ -137,6 +142,35 @@
 
             </tbody>
         </table>
+
+        <div class="w3-container">
+            Legenda:
+            <table class="table-legenda">
+                <tbody>
+                <tr>
+                    <td><span class="circle w3-light-green"></span></td>
+                    <td>Acertou de 1ª o exercício</td>
+                </tr>
+                <tr>
+                    <td><span class="circle w3-green"></span></td>
+                    <td>Acertou o exercício</td>
+                </tr>
+                <tr>
+                    <td><span class="circle w3-yellow"></span></td>
+                    <td>Exercícios ainda com tentativas</td>
+                </tr>
+                <tr>
+                    <td><span class="circle w3-red" ></span></td>
+                    <td>Errou o exercício</td>
+                </tr>
+                <tr>
+                    <td><span class="circle w3-gray" ></span></td>
+                    <td>Ainda não realizou o exercício</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
 
 
 

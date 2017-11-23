@@ -25,6 +25,8 @@
             
             html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
             table{font-family: "Times New Roman", Times, serif;}
+
+            .table-legenda{font-family: "Raleway",sans-serif}
             .w3-third img{margin-bottom: -6px; opacity: 0.8; cursor: pointer}
             .w3-third img:hover{opacity: 1}
 
