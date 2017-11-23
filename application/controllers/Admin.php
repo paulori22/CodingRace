@@ -51,7 +51,44 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $this->load->view('usuario/usuarios_view');
             $this->load->view('commons/footer');
         }
+/*
+        public function listUsuarios()
+        {
+            // Carrega funções de busca do BD
 
+            $this->load->model('usuarios_model');
+
+           // $start = $_POST['start'];
+
+            // Datatables Variables
+            $draw = intval($this->input->get("draw"));
+            $start = intval($this->input->get("start"));
+            $length = intval($this->input->get("length"));
+
+            $usuarios = $this->usuarios_model->GetAll('Nome');
+
+            $data = array();
+
+            foreach($usuarios as $u) {
+
+                $data[] = array(
+                    $u['Nome'],
+                    $u['RA'],
+                    $u['Email']
+                );
+            }
+
+            $output = array(
+                "draw" => $draw,
+                "recordsTotal" => count($usuarios),
+                "recordsFiltered" => count($usuarios),
+                "data" => $data
+            );
+            echo json_encode($output);
+            exit();
+
+        }
+*/
         public function CadUsuario()
         {
             $this->load->model('usuarios_model');
