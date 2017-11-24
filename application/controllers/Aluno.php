@@ -668,36 +668,36 @@ class Aluno extends MY_Controller {
             $this->form_validation->set_rules('senha', 'Senha', 'required');
             $this->form_validation->set_rules('email', 'Email', 'required');
             $this->form_validation->set_rules('confirmar_email', 'Confirmar Email', 'required|matches[email]');
-            $this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+            $this->form_validation->set_error_delimiters('<div class=\'w3-container w3-center w3-red\'><p class="error">', '</p></div>');
         } elseif ($operacao == 'editar_usuario') {
             $this->form_validation->set_rules('ra', 'RA', 'required');
             $this->form_validation->set_rules('nome', 'Nome', 'required');
             $this->form_validation->set_rules('email', 'Email', 'required');
             $this->form_validation->set_rules('confirmar_email', 'Confirmar Email', 'required|matches[email]');
-            $this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+            $this->form_validation->set_error_delimiters('<div class=\'w3-container w3-center w3-red\'><p class="error">', '</p></div>');
         } elseif ($operacao == 'novo_curso') {
             $this->form_validation->set_rules('pin', 'PIN', 'required|is_unique[Curso.PIN]');
             $this->form_validation->set_rules('nome', 'Nome', 'required');
             $this->form_validation->set_rules('ano', 'Ano', 'required');
             $this->form_validation->set_rules('periodo', 'Periodo', 'required');
-            $this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+            $this->form_validation->set_error_delimiters('<div class=\'w3-container w3-center w3-red\'><p class="error">', '</p></div>');
         } elseif ($operacao == 'editar_curso') {
             $this->form_validation->set_rules('pin', 'PIN', 'required');
             $this->form_validation->set_rules('nome', 'Nome', 'required');
             $this->form_validation->set_rules('ano', 'Ano', 'required');
             $this->form_validation->set_rules('periodo', 'Periodo', 'required');
-            $this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+            $this->form_validation->set_error_delimiters('<div class=\'w3-container w3-center w3-red\'><p class="error">', '</p></div>');
         } elseif ($operacao == 'novo_topico') {
             $this->form_validation->set_rules('nome', 'Nome', 'required');
-            $this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+            $this->form_validation->set_error_delimiters('<div class=\'w3-container w3-center w3-red\'><p class="error">', '</p></div>');
         } elseif ($operacao == 'editar_topico') {
             $this->form_validation->set_rules('nome', 'Nome', 'required');
-            $this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+            $this->form_validation->set_error_delimiters('<div class=\'w3-container w3-center w3-red\'><p class="error">', '</p></div>');
         } elseif ($operacao == 'novo_exercicio') {
             $this->form_validation->set_rules('exercicio', 'Pergunta', 'required');
             $this->form_validation->set_rules('bloom', 'Categoria de Bloom', 'required');
             $this->form_validation->set_rules('tipo_exercicio', 'Tipo de Exercício', 'required');
-            $this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+            $this->form_validation->set_error_delimiters('<div class=\'w3-container w3-center w3-red\'><p class="error">', '</p></div>');
         }
 
         return $this->form_validation->run();

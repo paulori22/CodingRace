@@ -709,27 +709,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $this->form_validation->set_rules('senha', 'Senha', 'required');
                 $this->form_validation->set_rules('email', 'Email', 'required');
                 $this->form_validation->set_rules('confirmar_email', 'Confirmar Email', 'required|matches[email]');
-                $this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+                $this->form_validation->set_error_delimiters('<div class=\'w3-container w3-center w3-red\'><p class="error">', '</p></div>');
             }elseif ($operacao == 'edita_usuario'){
                 $this->form_validation->set_rules('nome', 'Nome', 'required');
                 $this->form_validation->set_rules('senha', 'Senha', 'required');
                 $this->form_validation->set_rules('email', 'Email', 'required');
                 $this->form_validation->set_rules('confirmar_email', 'Confirmar Email', 'required|matches[email]');
-                $this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+                $this->form_validation->set_error_delimiters('<div class=\'w3-container w3-center w3-red\'><p class="error">', '</p></div>');
             }elseif ($operacao == 'curso') {
                 $this->form_validation->set_rules('pin', 'PIN', 'required');
                 $this->form_validation->set_rules('nome', 'Nome', 'required');
                 $this->form_validation->set_rules('ano', 'Ano', 'required');
                 $this->form_validation->set_rules('periodo', 'Periodo', 'required');
-                $this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+                $this->form_validation->set_error_delimiters('<div class=\'w3-container w3-center w3-red\'><p class="error">', '</p></div>');
             }elseif ($operacao == 'edita_curso'){
                 $this->form_validation->set_rules('nome', 'Nome', 'required');
                 $this->form_validation->set_rules('ano', 'Ano', 'required');
                 $this->form_validation->set_rules('periodo', 'Periodo', 'required');
-                $this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+                $this->form_validation->set_error_delimiters('<div class=\'w3-container w3-center w3-red\'><p class="error">', '</p></div>');
             }elseif ($operacao == 'topico'){
                 $this->form_validation->set_rules('nome', 'Nome', 'required');
-                $this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+                $this->form_validation->set_error_delimiters('<div class=\'w3-container w3-center w3-red\'><p class="error">', '</p></div>');
             }elseif ($operacao == 'exercicio'){
                 $this->form_validation->set_rules('exercicio', 'Pergunta', 'required');
                 $this->form_validation->set_rules('bloom', 'Categoria de Bloom', 'required');
@@ -740,7 +740,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 $this->form_validation->set_rules('opcaod', 'Alternativa D', 'required');
                 $this->form_validation->set_rules('opcaoe', 'Alternativa E', 'required');
                 $this->form_validation->set_rules('opcao_correta', 'Alternatia Correta', 'required');
-                $this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+                $this->form_validation->set_error_delimiters('<div class=\'w3-container w3-center w3-red\'><p class="error">', '</p></div>');
             }
 
             return $this->form_validation->run();

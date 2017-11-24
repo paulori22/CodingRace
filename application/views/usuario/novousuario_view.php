@@ -20,18 +20,7 @@
             </div>
 
 
-            <?php
-
-             $erros = validation_errors();
-            if(!empty($erros))
-            {
-                echo "<div class='w3-container w3-center w3-red'>";
-                echo $erros;
-                echo "</div>";
-            }
-
-
-            ?>
+            <?php echo validation_errors();?>
             <div class="w3-container w3-content">
                 <form class="w3-container w3-light-grey w3-text-black w3-margin" id="form_novousuario" method="post" enctype="multipart/form-data">
                     <h2 class="w3-center">Novo Usuário</h2>

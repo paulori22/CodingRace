@@ -12,7 +12,7 @@
         <div class="w3-display-middle w3-container w3-quarter w3-margin-top">
             <?php echo validation_errors();?>
             <?php if ($this->session->flashdata('usuario_naoencontrado') == TRUE): ?>
-                <p><?php echo $this->session->flashdata('usuario_naoencontrado'); ?></p>
+                <div class='w3-container w3-center w3-red'><p class="error"><?php echo $this->session->flashdata('usuario_naoencontrado'); ?></p></div>
             <?php endif; ?>
             <form class="w3-container w3-card-4" method="post" >
                 <p>

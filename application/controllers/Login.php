@@ -177,12 +177,12 @@ class Login extends CI_Controller
             $this->form_validation->set_rules('senha', 'Senha', 'required');
             $this->form_validation->set_rules('email', 'Email', 'required');
             $this->form_validation->set_rules('confirmar_email', 'Confirmar Email', 'required|matches[email]');
-            $this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+            $this->form_validation->set_error_delimiters('<div class=\'w3-container w3-center w3-red\'><p class="error">', '</p></div>');
         }
         elseif ($operacao == 'login'){
-            $this->form_validation->set_rules('ra', 'RA', 'required');
+            $this->form_validation->set_rules('ra', 'RA', 'required|is_numeric');
             $this->form_validation->set_rules('senha', 'Senha', 'required');
-            $this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+            $this->form_validation->set_error_delimiters('<div class=\'w3-container w3-center w3-red\'><p class="error">', '</p></div>');
         }
         return $this->form_validation->run();
     }
